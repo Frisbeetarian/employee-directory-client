@@ -15,10 +15,6 @@
     "react/no-children-prop": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    "indent": [
-      "error",
-      2
-    ],
     "tailwindcss/classnames-order": [
       "warn",
       {
