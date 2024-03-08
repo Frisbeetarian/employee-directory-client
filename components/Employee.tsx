@@ -3,14 +3,29 @@ import { Avatar, Flex, Text } from '@chakra-ui/react'
 
 export default function Employee({ employee }) {
   return (
-    <Flex className="my-4 w-full items-center">
-      <Flex className="items-center" width="30%">
+    <Flex className="my-4 w-full items-center justify-between">
+      <Flex className="items-center">
         <Avatar size="md" bg="red.500" className="mr-2" />
         <Text className="text-lg ">{employee.name}</Text>
       </Flex>
-      <Text width="25%">{employee.jobTitle}</Text>
-      <Text width="25%">Departments</Text>
-      <Text width="20%">Location</Text>
+      <Text>{employee.jobTitle}</Text>
+      <Text>
+        {employee.departments.map((department) => (
+          <Flex key={department.uuid}>{department.name}</Flex>
+        ))}
+      </Text>
+
+      <Text>
+        {employee.skills.map((skill) => (
+          <Flex key={skill.uuid}>{skill.name}</Flex>
+        ))}
+      </Text>
+
+      <Flex className="flex-col">
+        {employee.locations.map((location) => (
+          <Flex key={location.uuid}>{location.name}</Flex>
+        ))}
+      </Flex>
     </Flex>
   )
 }
