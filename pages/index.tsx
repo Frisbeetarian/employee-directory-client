@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { ReactDOM, useEffect } from 'react'
 import { Flex } from '@chakra-ui/react'
 
 import Sidebar from '@/components/Sidebar'
@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
 import { setEmployees } from '@/store/employees'
 import { setIsEmployeeDataLoading } from '@/store/ui'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -23,12 +24,14 @@ export default function Home() {
   }, [isLoading])
 
   return (
-    <Flex className="min-h-screen ">
+    <Flex className="min-h-screen overflow-x-hidden">
       <Sidebar />
       <Flex className="min-h-screen w-full flex-col">
         <NavigationBar />
 
         <ContentArea></ContentArea>
+
+        <Footer />
       </Flex>
     </Flex>
   )

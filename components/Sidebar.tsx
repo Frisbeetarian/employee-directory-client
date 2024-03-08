@@ -72,38 +72,38 @@ function Sidebar() {
       ></Flex>
 
       <Flex
-        className="box-content flex items-center justify-between border-t px-4 py-4 md:px-0 md:py-0"
+        className="box-content flex items-center justify-between border-t px-4 py-10 md:px-0 md:py-0"
         style={{ height: '7.5vh' }}
       >
         <Flex className="items-center px-2">
-          <Avatar size="md" bg="red.500" />
-          <p className="ml-2 text-lg text-white"></p>
+          <Avatar size="md" />
+          <p className="ml-2 text-lg ">fwefew</p>
         </Flex>
 
-        <Flex className="justify-between px-3">
-          <Menu>
-            <MenuButton>
-              <SettingsIcon />
-            </MenuButton>
+        {/*<Flex className="justify-between px-3">*/}
+        {/*  <Menu>*/}
+        {/*    <MenuButton>*/}
+        {/*      <SettingsIcon />*/}
+        {/*    </MenuButton>*/}
 
-            <MenuList bg="black" className="" border="none" borderRadius="0">
-              <MenuItem
-                bg="bg-black"
-                className="bg-black"
-                border="none"
-                onClick={async () => {
-                  try {
-                    router.replace('/')
-                  } catch (error) {
-                    console.error('Error logging out:', error)
-                  }
-                }}
-              >
-                Logout
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </Flex>
+        {/*    <MenuList bg="black" className="" border="none" borderRadius="0">*/}
+        {/*      <MenuItem*/}
+        {/*        bg="bg-black"*/}
+        {/*        className="bg-black"*/}
+        {/*        border="none"*/}
+        {/*        onClick={async () => {*/}
+        {/*          try {*/}
+        {/*            router.replace('/')*/}
+        {/*          } catch (error) {*/}
+        {/*            console.error('Error logging out:', error)*/}
+        {/*          }*/}
+        {/*        }}*/}
+        {/*      >*/}
+        {/*        Logout*/}
+        {/*      </MenuItem>*/}
+        {/*    </MenuList>*/}
+        {/*  </Menu>*/}
+        {/*</Flex>*/}
       </Flex>
     </div>
   )
