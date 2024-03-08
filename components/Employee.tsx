@@ -1,33 +1,39 @@
 import React from 'react'
-import { Avatar, Flex, Text } from '@chakra-ui/react'
+import { Avatar, Flex, Text, Box } from '@chakra-ui/react'
 
 export default function Employee({ employee }) {
   return (
-    <Flex className="my-4 w-full items-center justify-between">
-      <Flex className="items-center">
+    <Flex className="my-4 w-full items-center ">
+      <Flex className="items-center" width="20%">
         <Avatar size="md" bg="red.500" className="mr-2" />
         <Text className="text-lg ">{employee.name}</Text>
       </Flex>
 
-      <Text>{employee.jobTitle}</Text>
+      <Text width="20%">{employee.jobTitle}</Text>
 
-      <Text>{employee.email}</Text>
-
-      <Text>
+      <Flex className="flex-col" width="20%">
         {employee.departments.map((department) => (
-          <Flex key={department.uuid}>{department.name}</Flex>
+          <Box
+            key={department.uuid}
+            className="inline border-b"
+            display="inline"
+          >
+            <Text>{department.name}</Text>
+          </Box>
         ))}
-      </Text>
+      </Flex>
 
-      <Text>
+      <Flex className="flex-col" width="20%">
         {employee.skills.map((skill) => (
-          <Flex key={skill.uuid}>{skill.name}</Flex>
+          <Text key={skill.uuid}>{skill.name}</Text>
         ))}
-      </Text>
+      </Flex>
 
-      <Flex className="flex-col">
+      <Flex className="flex-col" width="20%">
         {employee.locations.map((location) => (
-          <Flex key={location.uuid}>{location.name}</Flex>
+          <Text className="" key={location.uuid}>
+            {location.name}
+          </Text>
         ))}
       </Flex>
     </Flex>
