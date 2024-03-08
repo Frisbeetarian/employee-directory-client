@@ -1,14 +1,14 @@
-import React from 'react';
-import NavigationBar from './NavigationBar';
-import { Flex } from '@chakra-ui/react';
+import React from 'react'
+import NavigationBar from './NavigationBar'
+import { Flex } from '@chakra-ui/react'
 
 const Layout: React.FC = ({ children }) => {
   return (
     <Flex className="flex-col">
-      <NavigationBar/>
+      <NavigationBar />
       {children}
     </Flex>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout
