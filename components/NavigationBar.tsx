@@ -1,16 +1,14 @@
-import { Flex } from '@chakra-ui/react';
-import { Link } from '@chakra-ui/next-js'
+import { Button, Flex } from '@chakra-ui/react'
 
 export default function NavigationBar() {
-    return (
-        <Flex className="items-center py-2">
-            <Link href='/' color='blue.400' _hover={{ color: 'blue.500' }}>
-                Home
-            </Link>
-
-            <Link href='/about' color='blue.400' _hover={{ color: 'blue.500' }}>
-                About
-            </Link>
-        </Flex>
-    )
+  return (
+    <Flex
+      className="w-full items-center gap-6 border-b px-4 py-10 text-lg"
+      style={{ height: '7.5vh' }}
+    >
+      <Button isActive>Employees</Button>
+      <Button>Departments</Button>
+      <Button>Projects</Button>
+    </Flex>
+  )
 }

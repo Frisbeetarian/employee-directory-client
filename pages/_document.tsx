@@ -13,8 +13,8 @@ export default class Document extends NextDocument {
     return (
       <Html lang="en">
         <Head>
-          <link href="/static/favicons/favicon.ico" rel="shortcut icon"/>
-          <link href="/static/favicons/site.webmanifest" rel="manifest"/>
+          <link href="/static/favicons/favicon.ico" rel="shortcut icon" />
+          <link href="/static/favicons/site.webmanifest" rel="manifest" />
           <link
             href="/static/favicons/apple-touch-icon.png"
             rel="apple-touch-icon"
@@ -39,8 +39,8 @@ export default class Document extends NextDocument {
             rel="mask-icon"
           />
 
-          <meta content="#ffffff" name="theme-color"/>
-          <meta content="#ffffff" name="msapplication-TileColor"/>
+          <meta content="#ffffff" name="theme-color" />
+          <meta content="#ffffff" name="msapplication-TileColor" />
           <meta
             content="/static/favicons/browserconfig.xml"
             name="msapplication-config"
@@ -54,19 +54,19 @@ export default class Document extends NextDocument {
             name="robots"
           />
 
-          <meta name="robots" content="follow, index"/>
-          <meta content={meta.description} name="description"/>
+          <meta name="robots" content="follow, index" />
+          <meta content={meta.description} name="description" />
 
-          <meta property="og:type" content={meta.type}/>
-          <meta property="og:site_name" content="Employee Directory"/>
-          <meta property="og:description" content={meta.description}/>
-          <meta property="og:title" content={meta.title}/>
-          <meta property="og:image" content={meta.image}/>
+          <meta property="og:type" content={meta.type} />
+          <meta property="og:site_name" content="Employee Directory" />
+          <meta property="og:description" content={meta.description} />
+          <meta property="og:title" content={meta.title} />
+          <meta property="og:image" content={meta.image} />
         </Head>
 
         <body className="">
-          <Main/>
-          <NextScript/>
+          <Main />
+          <NextScript />
         </body>
       </Html>
     )

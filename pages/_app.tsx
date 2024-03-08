@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react';
 
 import './globals.css'
-import Layout from '@/components/Layout';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,9 +18,7 @@ export default function MyApp({ Component, pageProps }): React.JSX.Element {
             useSystemColorMode: true,
           }}
         >
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <Component {...pageProps} />
         </ColorModeProvider>
       </ChakraProvider>
     </React.StrictMode>
