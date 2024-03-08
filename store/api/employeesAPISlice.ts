@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const employeesAPISlice = createApi({
   reducerPath: 'api/employees',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_API_URL}/api`,
+    baseUrl: `http://localhost:4020/api`,
     credentials: 'include',
   }),
   tagTypes: ['Employee'],

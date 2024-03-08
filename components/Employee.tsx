@@ -1,16 +1,16 @@
 import React from 'react'
-import { Avatar, Flex } from '@chakra-ui/react'
+import { Avatar, Flex, Text } from '@chakra-ui/react'
 
-export default function Employee() {
+export default function Employee({ employee }) {
   return (
-    <Flex className="my-4 w-full items-center gap-12">
-      <Flex className="items-center">
+    <Flex className="my-4 w-full items-center">
+      <Flex className="items-center" width="30%">
         <Avatar size="md" bg="red.500" className="mr-2" />
-        <p className="text-lg ">name</p>
+        <Text className="text-lg ">{employee.name}</Text>
       </Flex>
-      <p>Title</p>
-      <p>Departments</p>
-      <p>Location</p>
+      <Text width="25%">{employee.jobTitle}</Text>
+      <Text width="25%">Departments</Text>
+      <Text width="20%">Location</Text>
     </Flex>
   )
 }
