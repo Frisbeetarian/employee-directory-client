@@ -18,56 +18,52 @@ function Sidebar() {
   return (
     <div
       className="bg-neutral relative box-content flex flex-col scroll-auto border-r text-black"
-      style={{ flex: '0.20' }}
+      style={{ width: '20vw', height: '100vh' }}
     >
       <Flex
-        className="flex-col items-center justify-between border-b    md:flex-row"
-        style={{ height: '5vh' }}
+        className=" border-b p-4"
+        style={{ height: '7.5vh', minHeight: '7.5vh' }}
       >
-        <Flex className="w-full items-center">
-          <h1 className="w-full px-4 py-4 text-xl md:py-0">
-            Employee Directory
-          </h1>
+        <p className="text-lg leading-tight">Employee Directory</p>
 
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              aria-label="Options"
-              icon={<HamburgerIcon />}
-              variant="outline"
-              color="black"
-              className="mr-3 "
-              border="none"
-              borderRadius="0"
-              style={{
-                zIndex: 10,
-              }}
-            />
+        {/*<Menu>*/}
+        {/*  <MenuButton*/}
+        {/*    as={IconButton}*/}
+        {/*    aria-label="Options"*/}
+        {/*    icon={<HamburgerIcon />}*/}
+        {/*    variant="outline"*/}
+        {/*    color="black"*/}
+        {/*    className="mr-3 "*/}
+        {/*    border="none"*/}
+        {/*    borderRadius="0"*/}
+        {/*    style={{*/}
+        {/*      zIndex: 10,*/}
+        {/*    }}*/}
+        {/*  />*/}
 
-            <MenuList
-              bg="black"
-              className="z-10 "
-              border="none"
-              borderRadius="0"
-              style={{
-                zIndex: 10,
-              }}
-            >
-              <MenuItem
-                bg="black"
-                className="z-10 "
-                border="none"
-                icon={<EditIcon />}
-                style={{
-                  zIndex: 100,
-                }}
-                onClick={async () => {}}
-              >
-                Create department
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </Flex>
+        {/*  <MenuList*/}
+        {/*    bg="black"*/}
+        {/*    className="z-10 "*/}
+        {/*    border="none"*/}
+        {/*    borderRadius="0"*/}
+        {/*    style={{*/}
+        {/*      zIndex: 10,*/}
+        {/*    }}*/}
+        {/*  >*/}
+        {/*    <MenuItem*/}
+        {/*      bg="black"*/}
+        {/*      className="z-10 "*/}
+        {/*      border="none"*/}
+        {/*      icon={<EditIcon />}*/}
+        {/*      style={{*/}
+        {/*        zIndex: 100,*/}
+        {/*      }}*/}
+        {/*      onClick={async () => {}}*/}
+        {/*    >*/}
+        {/*      Create department*/}
+        {/*    </MenuItem>*/}
+        {/*  </MenuList>*/}
+        {/*</Menu>*/}
       </Flex>
 
       <Flex
