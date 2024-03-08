@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  employees: {},
+  list: {},
 }
 
 const slice = createSlice({
@@ -10,7 +10,7 @@ const slice = createSlice({
   reducers: {
     setEmployees: (employees, action) => {
       if (action.payload) {
-        employees.employees = action.payload
+        employees.list = action.payload
       }
     },
   },
