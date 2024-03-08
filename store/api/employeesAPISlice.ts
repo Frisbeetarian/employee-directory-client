@@ -1,16 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const employeesAPISlice = createApi({
-  reducerPath: 'api/users',
+  reducerPath: 'api/employees',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_URL}/api`,
+    baseUrl: `${process.env.NEXT_API_URL}/api`,
     credentials: 'include',
   }),
-  tagTypes: ['User'],
+  tagTypes: ['Employee'],
   endpoints: (builder) => ({
-    getMe: builder.query({
-      query: () => '/users/me',
-      providesTags: ['User'],
+    getEmployees: builder.query({
+      query: () => '/employees',
+      providesTags: ['Employee'],
     }),
     registerUser: builder.mutation({
       query: (userData) => ({
@@ -18,37 +18,10 @@ export const employeesAPISlice = createApi({
         method: 'POST',
         body: userData,
       }),
-      invalidatesTags: ['User'],
-    }),
-    loginUser: builder.mutation({
-      query: (userData) => ({
-        url: '/users/login',
-        method: 'POST',
-        body: userData,
-      }),
-      invalidatesTags: ['User'],
-    }),
-    logoutUser: builder.mutation({
-      query: () => ({
-        url: '/users/logout',
-        method: 'POST',
-      }),
-      invalidatesTags: ['User'],
-    }),
-    validatePassword: builder.mutation({
-      query: (passwordData) => ({
-        url: '/users/validatePassword',
-        method: 'POST',
-        body: passwordData,
-      }),
+      invalidatesTags: ['Employee'],
     }),
   }),
 })
 
-export const {
-  useGetMeQuery,
-  useRegisterUserMutation,
-  useLoginUserMutation,
-  useLogoutUserMutation,
-  useValidatePasswordMutation,
-} = employeesAPISlice
+export const { useGetEmployeesQuery, useRegisterUserMutation } =
+  employeesAPISlice
