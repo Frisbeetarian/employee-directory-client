@@ -18,7 +18,7 @@ function Sidebar() {
   return (
     <div
       className="bg-neutral relative box-content flex flex-col scroll-auto border-r text-black"
-      style={{ width: '20vw', height: '100vh' }}
+      style={{ width: '15vw', minWidth: '15vw', height: '100vh' }}
     >
       <Flex
         className=" border-b p-4"
@@ -72,7 +72,7 @@ function Sidebar() {
       ></Flex>
 
       <Flex
-        className="box-content flex items-center justify-between border-t border-red-500 px-4 py-4 md:px-0 md:py-0"
+        className="box-content flex items-center justify-between border-t px-4 py-4 md:px-0 md:py-0"
         style={{ height: '7.5vh' }}
       >
         <Flex className="items-center px-2">
