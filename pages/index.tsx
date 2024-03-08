@@ -4,7 +4,7 @@ import NavigationBar from '@/components/NavigationBar'
 
 export default function Home() {
   return (
-    <Flex className="min-h-screen  ">
+    <Flex className="min-h-screen ">
       <Sidebar />
 
       <NavigationBar />

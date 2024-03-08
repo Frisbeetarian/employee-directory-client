@@ -17,11 +17,11 @@ function Sidebar() {
 
   return (
     <div
-      className="bg-neutral relative box-content flex flex-col scroll-auto text-black"
+      className="bg-neutral relative box-content flex flex-col scroll-auto border-r text-black"
       style={{ flex: '0.20' }}
     >
       <Flex
-        className="flex-col items-center justify-between border-b border-red-500 md:flex-row"
+        className="flex-col items-center justify-between border-b    md:flex-row"
         style={{ height: '5vh' }}
       >
         <Flex className="w-full items-center">
