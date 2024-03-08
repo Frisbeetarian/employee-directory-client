@@ -26,7 +26,8 @@
     "redux": "^5.0.1",
     "next-redux-wrapper": "^8.1.0",
     "redux-persist": "^6.0.0",
-    "@reduxjs/toolkit": "^2.2.1"
+    "@reduxjs/toolkit": "^2.2.1",
+    "reselect": "^5.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",
