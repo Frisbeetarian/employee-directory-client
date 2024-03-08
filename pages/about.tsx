@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react'
 
 export default function About() {
   return (
@@ -7,4 +7,3 @@ export default function About() {
     </Flex>
   )
 }
-

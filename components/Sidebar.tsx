@@ -7,20 +7,17 @@ import {
   IconButton,
   Menu,
   MenuButton,
-  MenuItem, MenuList,
+  MenuItem,
+  MenuList,
 } from '@chakra-ui/react'
-import {
-  SettingsIcon,
-  HamburgerIcon,
-  EditIcon,
-} from '@chakra-ui/icons'
+import { SettingsIcon, HamburgerIcon, EditIcon } from '@chakra-ui/icons'
 
 function Sidebar() {
   const router = useRouter()
 
   return (
     <div
-      className='bg-neutral relative box-content flex flex-col scroll-auto text-white'
+      className="bg-neutral relative box-content flex flex-col scroll-auto text-black"
       style={{ flex: '0.20' }}
     >
       <Flex
@@ -29,14 +26,14 @@ function Sidebar() {
       >
         <Flex className="w-full items-center">
           <h1 className="w-full px-4 py-4 text-xl md:py-0">
-                        Employee Directory
+            Employee Directory
           </h1>
 
           <Menu>
             <MenuButton
               as={IconButton}
               aria-label="Options"
-              icon={<HamburgerIcon/>}
+              icon={<HamburgerIcon />}
               variant="outline"
               color="black"
               className="mr-3 "
@@ -60,14 +57,13 @@ function Sidebar() {
                 bg="black"
                 className="z-10 "
                 border="none"
-                icon={<EditIcon/>}
+                icon={<EditIcon />}
                 style={{
                   zIndex: 100,
                 }}
-                onClick={async () => {
-                }}
+                onClick={async () => {}}
               >
-                                Create department
+                Create department
               </MenuItem>
             </MenuList>
           </Menu>
@@ -77,35 +73,24 @@ function Sidebar() {
       <Flex
         className="flex-col overflow-auto scroll-auto pt-3"
         style={{ height: '87.5vh' }}
-      >
-
-      </Flex>
+      ></Flex>
 
       <Flex
         className="box-content flex items-center justify-between border-t border-red-500 px-4 py-4 md:px-0 md:py-0"
         style={{ height: '7.5vh' }}
       >
         <Flex className="items-center px-2">
-          <Avatar
-            size="md"
-            bg="red.500"
-          />
-          <p className="ml-2 text-lg text-white">
-          </p>
+          <Avatar size="md" bg="red.500" />
+          <p className="ml-2 text-lg text-white"></p>
         </Flex>
 
         <Flex className="justify-between px-3">
           <Menu>
             <MenuButton>
-              <SettingsIcon/>
+              <SettingsIcon />
             </MenuButton>
 
-            <MenuList
-              bg="black"
-              className=""
-              border="none"
-              borderRadius="0"
-            >
+            <MenuList bg="black" className="" border="none" borderRadius="0">
               <MenuItem
                 bg="bg-black"
                 className="bg-black"
@@ -118,7 +103,7 @@ function Sidebar() {
                   }
                 }}
               >
-                                Logout
+                Logout
               </MenuItem>
             </MenuList>
           </Menu>
