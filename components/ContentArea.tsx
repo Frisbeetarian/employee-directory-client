@@ -15,7 +15,10 @@ export default function ContentArea() {
   }
 
   return (
-    <Flex className="h-full flex-col px-4 py-5" style={{ width: '80vw' }}>
+    <Flex
+      className="h-full flex-col overflow-y-auto  px-4 py-5"
+      style={{ width: '80vw', maxHeight: '85vh' }}
+    >
       {employees?.map((employee) => (
         <Employee key={employee.uuid} employee={employee} />
       ))}

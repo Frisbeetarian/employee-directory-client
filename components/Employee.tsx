@@ -8,7 +8,11 @@ export default function Employee({ employee }) {
         <Avatar size="md" bg="red.500" className="mr-2" />
         <Text className="text-lg ">{employee.name}</Text>
       </Flex>
+
       <Text>{employee.jobTitle}</Text>
+
+      <Text>{employee.email}</Text>
+
       <Text>
         {employee.departments.map((department) => (
           <Flex key={department.uuid}>{department.name}</Flex>
