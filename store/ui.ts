@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createSelector } from 'reselect'
 
 const initialState = {
-  isEmployeeDataloading: false,
+  isEmployeeDataloading: true,
 }
 
 const slice = createSlice({
@@ -10,9 +10,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     setIsEmployeeDataLoading: (ui, action) => {
-      if (action.payload) {
-        ui.isEmployeeDataloading = action.payload
-      }
+      ui.isEmployeeDataloading = action.payload
     },
   },
 })
