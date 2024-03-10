@@ -16,8 +16,20 @@ import {
 
 export default function NavigationBar() {
   const dispatch = useDispatch()
-  const [, setSearchInput] = useState(null)
+  const [searchInput, setSearchInput] = useState(null)
   const searchQuery = useSelector(getSearchQuery)
+
+  async function handleSearch(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      if ((e.target as HTMLInputElement).value !== searchQuery) {
+        dispatch(setSearchQuery(null))
+        setSearchInput(null)
+        dispatch(setSearchQuery((e.target as HTMLInputElement).value))
+        setSearchInput((e.target as any).value as React.SetStateAction<null>)
+        dispatch(setIsSearchLoading(true))
+      }
+    }
+  }
 
   return (
     <Flex
@@ -40,19 +52,7 @@ export default function NavigationBar() {
             className="m-0 bg-transparent pl-2"
             placeholder="Search..."
             size="md"
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                if ((e.target as HTMLInputElement).value !== searchQuery) {
-                  dispatch(setSearchQuery(null))
-                  setSearchInput(null)
-                  dispatch(setSearchQuery((e.target as HTMLInputElement).value))
-                  setSearchInput(
-                    (e.target as any).value as React.SetStateAction<null>
-                  )
-                  dispatch(setIsSearchLoading(true))
-                }
-              }
-            }}
+            onKeyPress={(e) => handleSearch(e)}
           />
         </InputGroup>
       </Flex>
