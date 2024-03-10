@@ -12,13 +12,13 @@ import Footer from '@/components/Footer'
 
 export default function Home() {
   const dispatch = useDispatch()
-  const { data: employees, isLoading } = useGetEmployeesQuery(undefined)
+  const { data, isLoading } = useGetEmployeesQuery(1, 12)
 
   useEffect(() => {
-    dispatch(setIsEmployeeDataLoading(isLoading))
+    dispatch(setIsEmployeeDataLoading(true))
 
-    if (employees && employees.length !== 0) {
-      dispatch(setEmployees(employees))
+    if (data?.employees && data?.employees?.length !== 0) {
+      dispatch(setEmployees(data.employees))
       dispatch(setIsEmployeeDataLoading(false))
     }
   }, [isLoading])

@@ -3,26 +3,35 @@ import ReactPaginate from 'react-paginate'
 import { useSelector } from 'react-redux'
 import { getEmployees } from '@/store/employees'
 import { Flex } from '@chakra-ui/react'
+import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
 
 export default function Footer() {
-  const employees = useSelector(getEmployees)
-  const [itemOffset, setItemOffset] = useState(0)
+  // const employees = useSelector(getEmployees)
 
-  const endOffset = itemOffset + 12
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`)
-  const pageCount = Math.ceil(employees.length / 12)
+  const [page, setPage] = React.useState(1)
+  const limit = 12
+
+  const { data, isLoading } = useGetEmployeesQuery({
+    page,
+    limit,
+  })
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * 12) % employees.length
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    )
-    setItemOffset(newOffset)
+    const newPage = event.selected + 1
+    setPage(newPage)
   }
+
+  console.log('data', data)
+
+  // const { employees, currentPage, totalPages, totalCount } = data
+  // const pageCount = Math.ceil(totalCount / limit)
+
+  // console.log('employeesResponse', employees)
+  // console.log('pageCount', pageCount)
 
   return (
     <Flex
-      className="w-full items-center justify-center border-t "
+      className="w-full items-center justify-center border-t"
       style={{ height: '7.5vh' }}
     >
       <ReactPaginate

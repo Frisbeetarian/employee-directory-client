@@ -75,8 +75,6 @@
   }
 }
 
-
-
 .pagination {
   list-style: none;
   display: flex;
@@ -100,5 +98,5 @@
   margin: 2px 20px 0 20px;
   background:none;
   border: 1px solid black;
-  border-radius: 50%;
+  border-radius: 7px ;
 }
