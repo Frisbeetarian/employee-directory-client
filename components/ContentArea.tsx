@@ -9,16 +9,18 @@ export default function ContentArea() {
   const employees = useSelector(getEmployees)
   const isEmployeeDataLoading = useSelector(getIsEmployeeDataLoading)
 
-  return isEmployeeDataLoading ? (
-    <div>Loading...</div>
-  ) : (
+  return (
     <Flex
       className="h-full w-full flex-col overflow-y-auto px-4 py-5 pr-10"
       style={{ width: '85vw', maxHeight: '85vh' }}
     >
-      {employees?.map((employee) => (
-        <Employee key={employee.uuid} employee={employee} />
-      ))}
+      {isEmployeeDataLoading ? (
+        <div>Loading...</div>
+      ) : (
+        employees?.map((employee) => (
+          <Employee key={employee.uuid} employee={employee} />
+        ))
+      )}
     </Flex>
   )
 }
