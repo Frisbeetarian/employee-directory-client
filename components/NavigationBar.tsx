@@ -8,6 +8,11 @@ import {
 import React, { useState } from 'react'
 import { SearchIcon } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
+import {
+  getSearchQuery,
+  setIsSearchLoading,
+  setSearchQuery,
+} from '@/store/search'
 
 export default function NavigationBar() {
   const dispatch = useDispatch()
@@ -44,7 +49,7 @@ export default function NavigationBar() {
                   setSearchInput(
                     (e.target as any).value as React.SetStateAction<null>
                   )
-                  dispatch(setSearchLoading(true))
+                  dispatch(setIsSearchLoading(true))
                 }
               }
             }}
