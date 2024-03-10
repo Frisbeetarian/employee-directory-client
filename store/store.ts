@@ -3,12 +3,16 @@ import { createWrapper } from 'next-redux-wrapper'
 
 import rootReducer from './reducer'
 import { employeesAPISlice } from './api/employeesAPISlice'
+import { searchAPISlice } from '@/store/api/searchAPISlice'
 
 const makeStore = () =>
   configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(employeesAPISlice.middleware),
+      getDefaultMiddleware().concat(
+        employeesAPISlice.middleware,
+        searchAPISlice.middleware
+      ),
     devTools: true,
   })
 
