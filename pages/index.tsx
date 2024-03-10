@@ -7,7 +7,7 @@ import ContentArea from '@/components/ContentArea'
 import { useDispatch } from 'react-redux'
 import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
 import { setEmployees } from '@/store/employees'
-import { setIsEmployeeDataLoading } from '@/store/ui'
+import { setIsEmployeeDataLoading, setPaginationData } from '@/store/ui'
 import Footer from '@/components/Footer'
 
 export default function Home() {
@@ -20,6 +20,14 @@ export default function Home() {
     if (data?.employees && data?.employees?.length !== 0) {
       dispatch(setEmployees(data.employees))
       dispatch(setIsEmployeeDataLoading(false))
+      dispatch(
+        setPaginationData({
+          page: data.currentPage,
+          limit: 12,
+          totalPages: data.totalPages,
+          totalCount: data.totalCount,
+        })
+      )
     }
   }, [isLoading])
 

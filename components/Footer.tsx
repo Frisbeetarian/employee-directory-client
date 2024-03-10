@@ -1,33 +1,31 @@
 import React, { useState } from 'react'
 import ReactPaginate from 'react-paginate'
-import { useSelector } from 'react-redux'
-import { getEmployees } from '@/store/employees'
+import { useDispatch, useSelector } from 'react-redux'
 import { Flex } from '@chakra-ui/react'
 import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
+import { getPaginationData, setPaginationData } from '@/store/ui'
 
 export default function Footer() {
-  // const employees = useSelector(getEmployees)
-
-  const [page, setPage] = React.useState(1)
-  const limit = 12
-
-  const { data, isLoading } = useGetEmployeesQuery({
-    page,
-    limit,
-  })
+  const dispatch = useDispatch()
+  const paginationData = useSelector(getPaginationData)
 
   const handlePageClick = (event) => {
     const newPage = event.selected + 1
-    setPage(newPage)
+
+    dispatch(
+      setPaginationData({
+        page: newPage,
+        limit: 12,
+        totalPages: paginationData.pageCount,
+        totalCount: paginationData.totalCount,
+      })
+    )
   }
 
-  console.log('data', data)
+  console.log('paginationData.pageCount', paginationData.pageCount)
 
   // const { employees, currentPage, totalPages, totalCount } = data
   // const pageCount = Math.ceil(totalCount / limit)
-
-  // console.log('employeesResponse', employees)
-  // console.log('pageCount', pageCount)
 
   return (
     <Flex
@@ -42,7 +40,7 @@ export default function Footer() {
         nextLabel=">"
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
-        pageCount={pageCount}
+        pageCount={paginationData.totalPages}
         previousLabel="<"
         renderOnZeroPageCount={null}
       />

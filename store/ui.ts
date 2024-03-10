@@ -6,7 +6,8 @@ const initialState = {
   paginationData: {
     page: 1,
     limit: 12,
-    total: 0,
+    pageCount: 0,
+    totalCount: 0,
   },
 }
 
