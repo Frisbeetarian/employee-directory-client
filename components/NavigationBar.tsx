@@ -5,10 +5,15 @@ import {
   InputGroup,
   InputRightElement,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { SearchIcon } from 'lucide-react'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function NavigationBar() {
+  const dispatch = useDispatch()
+  const [, setSearchInput] = useState(null)
+  const searchQuery = useSelector(getSearchQuery)
+
   return (
     <Flex
       className="w-full items-center justify-between border-b px-4 py-10 text-lg"
@@ -33,6 +38,13 @@ export default function NavigationBar() {
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 if ((e.target as HTMLInputElement).value !== searchQuery) {
+                  dispatch(setSearchQuery(null))
+                  setSearchInput(null)
+                  dispatch(setSearchQuery((e.target as HTMLInputElement).value))
+                  setSearchInput(
+                    (e.target as any).value as React.SetStateAction<null>
+                  )
+                  dispatch(setSearchLoading(true))
                 }
               }
             }}
