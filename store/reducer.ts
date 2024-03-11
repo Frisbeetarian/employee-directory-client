@@ -5,6 +5,7 @@ import { employeesAPISlice } from './api/employeesAPISlice'
 import { searchAPISlice } from '@/store/api/searchAPISlice'
 import { departmentsAPISlice } from '@/store/api/departmentsAPISlice'
 import { locationsAPISlice } from '@/store/api/locationsAPISlice'
+import { projectsAPISlice } from '@/store/api/projectsAPISlice'
 
 export default combineReducers({
   entities: entitiesReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   [searchAPISlice.reducerPath]: searchAPISlice.reducer,
   [departmentsAPISlice.reducerPath]: departmentsAPISlice.reducer,
   [locationsAPISlice.reducerPath]: locationsAPISlice.reducer,
+  [projectsAPISlice.reducerPath]: projectsAPISlice.reducer,
 })

@@ -5,6 +5,7 @@ import uiReducer from './ui'
 import searchReducer from './search'
 import departmentsReducer from './departments'
 import locationsReducer from './locations'
+import projectsReducer from './projects'
 
 export default combineReducers({
   employees: employeesReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   search: searchReducer,
   departments: departmentsReducer,
   locations: locationsReducer,
+  projects: projectsReducer,
 })

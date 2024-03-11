@@ -6,6 +6,7 @@ import { employeesAPISlice } from './api/employeesAPISlice'
 import { searchAPISlice } from '@/store/api/searchAPISlice'
 import { departmentsAPISlice } from '@/store/api/departmentsAPISlice'
 import { locationsAPISlice } from '@/store/api/locationsAPISlice'
+import { projectsAPISlice } from '@/store/api/projectsAPISlice'
 
 const makeStore = () =>
   configureStore({
@@ -15,7 +16,8 @@ const makeStore = () =>
         employeesAPISlice.middleware,
         searchAPISlice.middleware,
         departmentsAPISlice.middleware,
-        locationsAPISlice.middleware
+        locationsAPISlice.middleware,
+        projectsAPISlice.middleware
       ),
     devTools: true,
   })
