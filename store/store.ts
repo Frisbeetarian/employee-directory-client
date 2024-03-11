@@ -5,6 +5,7 @@ import rootReducer from './reducer'
 import { employeesAPISlice } from './api/employeesAPISlice'
 import { searchAPISlice } from '@/store/api/searchAPISlice'
 import { departmentsAPISlice } from '@/store/api/departmentsAPISlice'
+import { locationsAPISlice } from '@/store/api/locationsAPISlice'
 
 const makeStore = () =>
   configureStore({
@@ -13,7 +14,8 @@ const makeStore = () =>
       getDefaultMiddleware().concat(
         employeesAPISlice.middleware,
         searchAPISlice.middleware,
-        departmentsAPISlice.middleware
+        departmentsAPISlice.middleware,
+        locationsAPISlice.middleware
       ),
     devTools: true,
   })
