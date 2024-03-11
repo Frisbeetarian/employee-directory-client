@@ -58,7 +58,7 @@ export default function Footer() {
         nextLabel=">"
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
-        pageCount={paginationData.totalPages}
+        pageCount={paginationData.pageCount}
         previousLabel="<"
         renderOnZeroPageCount={null}
         forcePage={page - 1}

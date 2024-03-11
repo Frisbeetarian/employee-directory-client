@@ -24,7 +24,7 @@ export default function Home() {
         setPaginationData({
           page: data.currentPage,
           limit: 12,
-          totalPages: data.totalPages,
+          pageCount: data.totalPages,
           totalCount: data.totalCount,
         })
       )

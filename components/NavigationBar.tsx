@@ -16,12 +16,15 @@ import {
 import { useSearchEmployeesQuery } from '@/store/api/searchAPISlice'
 import { setEmployees } from '@/store/employees'
 import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
+import { getPaginationData, setPaginationData } from '@/store/ui'
 
 export default function NavigationBar() {
   const dispatch = useDispatch()
   const [searchInput, setSearchInput] = useState(null)
   const [employeeLoad, setEmployeeLoad] = useState(true)
   const searchQuery = useSelector(getSearchQuery)
+  const paginationData = useSelector(getPaginationData)
+
   const { data: employeeData, isLoading: employeeLoading } =
     useGetEmployeesQuery(
       { page: 1, limit: 12 },
@@ -51,6 +54,13 @@ export default function NavigationBar() {
     if (data) {
       dispatch(setIsSearchLoading(false))
       dispatch(setEmployees(data))
+
+      dispatch(
+        setPaginationData({
+          ...paginationData,
+          pageCount: 1,
+        })
+      )
     }
   }, [data])
 
