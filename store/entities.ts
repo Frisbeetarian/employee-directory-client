@@ -6,6 +6,7 @@ import searchReducer from './search'
 import departmentsReducer from './departments'
 import locationsReducer from './locations'
 import projectsReducer from './projects'
+import skillsReducer from './skills'
 
 export default combineReducers({
   employees: employeesReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   departments: departmentsReducer,
   locations: locationsReducer,
   projects: projectsReducer,
+  skills: skillsReducer,
 })
