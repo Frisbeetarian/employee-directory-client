@@ -24,6 +24,7 @@ export default function NavigationBar() {
   const [employeeLoad, setEmployeeLoad] = useState(true)
   const searchQuery = useSelector(getSearchQuery)
   const paginationData = useSelector(getPaginationData)
+  const { page, limit } = paginationData
 
   const { data: employeeData, isLoading: employeeLoading } =
     useGetEmployeesQuery(
@@ -47,6 +48,14 @@ export default function NavigationBar() {
   useEffect(() => {
     if (employeeData) {
       dispatch(setEmployees(employeeData.employees))
+
+      dispatch(
+        setPaginationData({
+          ...paginationData,
+          pageCount: Math.ceil(employeeData.totalCount / limit),
+          totalCount: employeeData.totalCount,
+        })
+      )
     }
   }, [employeeData])
 
