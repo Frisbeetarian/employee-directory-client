@@ -16,6 +16,8 @@ import { useGetDepartmentsQuery } from '@/store/api/departmentsAPISlice'
 import { useDispatch } from 'react-redux'
 import { setDepartments } from '@/store/departments'
 import Employee from '@/components/Employee'
+import { useGetLocationsQuery } from '@/store/api/locationsAPISlice'
+import { setLocations } from '@/store/locations'
 
 function Sidebar() {
   const router = useRouter()
@@ -23,9 +25,15 @@ function Sidebar() {
   const { data: departmentsData, isLoading: isDepartmentsLoading } =
     useGetDepartmentsQuery()
 
+  const { data: locationsData, isLoading: isLocationsLoading } =
+    useGetLocationsQuery()
+
+  useEffect(() => {
+    dispatch(setLocations(locationsData))
+  }, [locationsData])
+
   useEffect(() => {
     dispatch(setDepartments(departmentsData))
-    console.log(departmentsData)
   }, [departmentsData])
 
   return (
@@ -92,6 +100,18 @@ function Sidebar() {
             ) : (
               departmentsData?.map((department) => (
                 <Text key={department.uuid}>{department.name}</Text>
+              ))
+            )}
+          </Flex>
+
+          <Text className="mt-5 font-bold">Locations</Text>
+
+          <Flex className="ml-2 flex-col">
+            {isDepartmentsLoading ? (
+              <div>Loading locations...</div>
+            ) : (
+              locationsData?.map((location) => (
+                <Text key={location.uuid}>{location.country}</Text>
               ))
             )}
           </Flex>
