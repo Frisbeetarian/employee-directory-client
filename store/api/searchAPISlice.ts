@@ -4,18 +4,29 @@ export const searchAPISlice = createApi({
   reducerPath: 'api/search',
   baseQuery: fetchBaseQuery({
     baseUrl: `http://localhost:4020/api`,
-    credentials: 'include',
   }),
   tagTypes: ['Search'],
   endpoints: (builder) => ({
-    getEmployees: builder.query({
-      query: ({ page, limit, department }) => ({
-        url: '/employees',
-        params: { page, limit, department },
+    searchEmployees: builder.query({
+      query: ({
+        page = 1,
+        limit = 12,
+        query = '',
+        department = '',
+        location = '',
+      }) => ({
+        url: '/search/employees',
+        params: {
+          page,
+          limit,
+          query,
+          department,
+          location,
+        },
       }),
       providesTags: ['Search'],
     }),
   }),
 })
 
-export const { useGetEmployeesQuery } = searchAPISlice
+export const { useSearchEmployeesQuery } = searchAPISlice

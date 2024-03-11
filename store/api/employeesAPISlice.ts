@@ -9,7 +9,7 @@ export const employeesAPISlice = createApi({
   tagTypes: ['Employee'],
   endpoints: (builder) => ({
     getEmployees: builder.query({
-      query: ({ page, limit, department }) => ({
+      query: ({ page = 1, limit = 12, department }) => ({
         url: '/employees',
         params: { page, limit, department },
       }),
