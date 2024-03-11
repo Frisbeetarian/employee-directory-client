@@ -9,16 +9,22 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
 } from '@chakra-ui/react'
 import { SettingsIcon, HamburgerIcon, EditIcon } from '@chakra-ui/icons'
 import { useGetDepartmentsQuery } from '@/store/api/departmentsAPISlice'
+import { useDispatch } from 'react-redux'
+import { setDepartments } from '@/store/departments'
+import Employee from '@/components/Employee'
 
 function Sidebar() {
   const router = useRouter()
+  const dispatch = useDispatch()
   const { data: departmentsData, isLoading: isDepartmentsLoading } =
     useGetDepartmentsQuery()
 
   useEffect(() => {
+    dispatch(setDepartments(departmentsData))
     console.log(departmentsData)
   }, [departmentsData])
 
@@ -74,9 +80,23 @@ function Sidebar() {
       </Flex>
 
       <Flex
-        className="flex-col overflow-auto scroll-auto pt-3"
+        className="flex-col overflow-auto scroll-auto p-4 pt-3"
         style={{ height: '87.5vh' }}
-      ></Flex>
+      >
+        <Flex className="flex-col">
+          <Text className="font-bold">Departments</Text>
+
+          <Flex className="ml-2 flex-col">
+            {isDepartmentsLoading ? (
+              <div>Loading departments...</div>
+            ) : (
+              departmentsData?.map((department) => (
+                <Text key={department.uuid}>{department.name}</Text>
+              ))
+            )}
+          </Flex>
+        </Flex>
+      </Flex>
 
       <Flex
         className="box-content flex items-center justify-between border-t px-4 py-10 md:px-0 md:py-0"

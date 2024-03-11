@@ -13,7 +13,7 @@ const slice = createSlice({
   name: 'departments',
   initialState,
   reducers: {
-    setEmployees: (departments, action) => {
+    setDepartments: (departments, action) => {
       if (action.payload) {
         departments.list = action.payload
       }
@@ -26,5 +26,5 @@ export const getDepartments = createSelector(
   (departments) => departments.list
 )
 
-export const { setEmployees } = slice.actions
+export const { setDepartments } = slice.actions
 export default slice.reducer
