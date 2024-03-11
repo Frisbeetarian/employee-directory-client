@@ -18,6 +18,8 @@ import { setDepartments } from '@/store/departments'
 import Employee from '@/components/Employee'
 import { useGetLocationsQuery } from '@/store/api/locationsAPISlice'
 import { setLocations } from '@/store/locations'
+import { setProjects } from '@/store/projects'
+import { useGetProjectsQuery } from '@/store/api/projectsAPISlice'
 
 function Sidebar() {
   const router = useRouter()
@@ -27,6 +29,13 @@ function Sidebar() {
 
   const { data: locationsData, isLoading: isLocationsLoading } =
     useGetLocationsQuery()
+
+  const { data: projectsData, isLoading: isProjectsLoading } =
+    useGetProjectsQuery()
+
+  useEffect(() => {
+    dispatch(setProjects(projectsData))
+  }, [projectsData])
 
   useEffect(() => {
     dispatch(setLocations(locationsData))
@@ -107,11 +116,23 @@ function Sidebar() {
           <Text className="mt-5 font-bold">Locations</Text>
 
           <Flex className="ml-2 flex-col">
-            {isDepartmentsLoading ? (
+            {isLocationsLoading ? (
               <div>Loading locations...</div>
             ) : (
               locationsData?.map((location) => (
                 <Text key={location.uuid}>{location.country}</Text>
+              ))
+            )}
+          </Flex>
+
+          <Text className="mt-5 font-bold">Projects</Text>
+
+          <Flex className="ml-2 flex-col">
+            {isProjectsLoading ? (
+              <div>Loading projects...</div>
+            ) : (
+              projectsData?.map((project) => (
+                <Text key={project.uuid}>{project.name}</Text>
               ))
             )}
           </Flex>
