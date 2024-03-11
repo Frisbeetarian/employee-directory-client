@@ -12,7 +12,7 @@ import Footer from '@/components/Footer'
 
 export default function Home() {
   const dispatch = useDispatch()
-  const { data, isLoading } = useGetEmployeesQuery(1, 12)
+  const { data, isLoading } = useGetEmployeesQuery({ page: 1, limit: 12 })
 
   useEffect(() => {
     dispatch(setIsEmployeeDataLoading(true))

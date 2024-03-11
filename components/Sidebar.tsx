@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {
   Avatar,
@@ -11,9 +11,16 @@ import {
   MenuList,
 } from '@chakra-ui/react'
 import { SettingsIcon, HamburgerIcon, EditIcon } from '@chakra-ui/icons'
+import { useGetDepartmentsQuery } from '@/store/api/departmentsAPISlice'
 
 function Sidebar() {
   const router = useRouter()
+  const { data: departmentsData, isLoading: isDepartmentsLoading } =
+    useGetDepartmentsQuery()
+
+  useEffect(() => {
+    console.log(departmentsData)
+  }, [departmentsData])
 
   return (
     <div

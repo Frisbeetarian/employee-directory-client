@@ -4,6 +4,7 @@ import { createWrapper } from 'next-redux-wrapper'
 import rootReducer from './reducer'
 import { employeesAPISlice } from './api/employeesAPISlice'
 import { searchAPISlice } from '@/store/api/searchAPISlice'
+import { departmentsAPISlice } from '@/store/api/departmentsAPISlice'
 
 const makeStore = () =>
   configureStore({
@@ -11,7 +12,8 @@ const makeStore = () =>
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
         employeesAPISlice.middleware,
-        searchAPISlice.middleware
+        searchAPISlice.middleware,
+        departmentsAPISlice.middleware
       ),
     devTools: true,
   })
