@@ -17,7 +17,7 @@ import {
   useGetEmployeesByDepartmentUuidQuery,
 } from '@/store/api/departmentsAPISlice'
 import { useDispatch } from 'react-redux'
-import { setDepartments } from '@/store/departments'
+import { setDepartments, setSelectedDepartment } from '@/store/departments'
 import Employee from '@/components/Employee'
 import { useGetLocationsQuery } from '@/store/api/locationsAPISlice'
 import { setLocations } from '@/store/locations'
@@ -75,7 +75,7 @@ function Sidebar() {
   }, [locationsData])
 
   useEffect(() => {
-    console.log('employeesByDepartment', employeesByDepartment)
+    // console.log('employeesByDepartment', employeesByDepartment)
     if (
       employeesByDepartment &&
       !isEmployeesByDepartmentLoading &&
@@ -96,6 +96,7 @@ function Sidebar() {
 
   function handleDepartmentSelected(departmentUuid) {
     dispatch(setActiveIndex('departments'))
+    dispatch(setSelectedDepartment(departmentUuid))
     dispatch(setShouldFetchEmployees(false))
 
     setSelectedDepartmentUuid(departmentUuid)

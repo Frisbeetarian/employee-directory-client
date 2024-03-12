@@ -6,6 +6,7 @@ import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
 import {
   getActiveIndex,
   getPaginationData,
+  getShouldFetchDepartmentEmployees,
   getShouldFetchEmployees,
   setIsEmployeeDataLoading,
   setPaginationData,
@@ -14,12 +15,17 @@ import {
 } from '@/store/ui'
 import { setEmployees } from '@/store/employees'
 import { useGetEmployeesByDepartmentUuidQuery } from '@/store/api/departmentsAPISlice'
+import { getSelectedDepartment } from '@/store/departments'
 
 export default function Footer() {
   const dispatch = useDispatch()
   const paginationData = useSelector(getPaginationData)
   const shouldFetchEmployees = useSelector(getShouldFetchEmployees)
   const activeIndex = useSelector(getActiveIndex)
+  const selectedDepartmentUuid = useSelector(getSelectedDepartment)
+  const shouldFetchDepartmentEmployees = useSelector(
+    getShouldFetchDepartmentEmployees
+  )
 
   const { page, limit } = paginationData
 
@@ -32,11 +38,28 @@ export default function Footer() {
     data: employeesByDepartment,
     isLoading: isEmployeesByDepartmentLoading,
   } = useGetEmployeesByDepartmentUuidQuery(
-    { departmentUuid: selectedDepartmentUuid, page: 1, limit: 12 },
+    { departmentUuid: selectedDepartmentUuid, page, limit },
     {
-      skip: !selectedDepartmentUuid,
+      skip: !shouldFetchDepartmentEmployees,
     }
   )
+
+  useEffect(() => {
+    if (
+      employeesByDepartment?.employees &&
+      employeesByDepartment?.employees?.length !== 0
+    ) {
+      dispatch(setEmployees(employeesByDepartment.employees))
+
+      dispatch(
+        setPaginationData({
+          ...paginationData,
+          pageCount: Math.ceil(employeesByDepartment.totalCount / limit),
+          totalCount: employeesByDepartment.totalCount,
+        })
+      )
+    }
+  }, [employeesByDepartment, isEmployeesByDepartmentLoading])
 
   useEffect(() => {
     dispatch(setIsEmployeeDataLoading(true))
@@ -59,9 +82,10 @@ export default function Footer() {
     const newPage = event.selected + 1
     if (activeIndex === 'employees') {
       dispatch(setShouldFetchEmployees(true))
-    } else if (activeIndex === 'employeesByDepartment') {
-      dispatch(setShouldFetchEmployees(false))
+      dispatch(setShouldFetchDepartmentEmployees(false))
+    } else if (activeIndex === 'departments') {
       dispatch(setShouldFetchDepartmentEmployees(true))
+      dispatch(setShouldFetchEmployees(false))
     }
 
     dispatch(
