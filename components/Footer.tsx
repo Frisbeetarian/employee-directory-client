@@ -9,9 +9,11 @@ import {
   getShouldFetchEmployees,
   setIsEmployeeDataLoading,
   setPaginationData,
+  setShouldFetchDepartmentEmployees,
   setShouldFetchEmployees,
 } from '@/store/ui'
 import { setEmployees } from '@/store/employees'
+import { useGetEmployeesByDepartmentUuidQuery } from '@/store/api/departmentsAPISlice'
 
 export default function Footer() {
   const dispatch = useDispatch()
@@ -24,6 +26,16 @@ export default function Footer() {
   const { data, isLoading } = useGetEmployeesQuery(
     { page, limit },
     { skip: !shouldFetchEmployees }
+  )
+
+  const {
+    data: employeesByDepartment,
+    isLoading: isEmployeesByDepartmentLoading,
+  } = useGetEmployeesByDepartmentUuidQuery(
+    { departmentUuid: selectedDepartmentUuid, page: 1, limit: 12 },
+    {
+      skip: !selectedDepartmentUuid,
+    }
   )
 
   useEffect(() => {
@@ -45,7 +57,12 @@ export default function Footer() {
 
   const handlePageClick = (event) => {
     const newPage = event.selected + 1
-    dispatch(setShouldFetchEmployees(true))
+    if (activeIndex === 'employees') {
+      dispatch(setShouldFetchEmployees(true))
+    } else if (activeIndex === 'employeesByDepartment') {
+      dispatch(setShouldFetchEmployees(false))
+      dispatch(setShouldFetchDepartmentEmployees(true))
+    }
 
     dispatch(
       setPaginationData({
