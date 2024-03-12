@@ -8,14 +8,18 @@ import {
   getPaginationData,
   getShouldFetchDepartmentEmployees,
   getShouldFetchEmployees,
+  getShouldFetchLocationEmployees,
   setIsEmployeeDataLoading,
   setPaginationData,
   setShouldFetchDepartmentEmployees,
   setShouldFetchEmployees,
+  setShouldFetchLocationEmployees,
 } from '@/store/ui'
 import { setEmployees } from '@/store/employees'
 import { useGetEmployeesByDepartmentUuidQuery } from '@/store/api/departmentsAPISlice'
 import { getSelectedDepartment } from '@/store/departments'
+import { useGetEmployeesByLocationUuidQuery } from '@/store/api/locationsAPISlice'
+import { getSelectedLocation } from '@/store/locations'
 
 export default function Footer() {
   const dispatch = useDispatch()
@@ -23,8 +27,12 @@ export default function Footer() {
   const shouldFetchEmployees = useSelector(getShouldFetchEmployees)
   const activeIndex = useSelector(getActiveIndex)
   const selectedDepartmentUuid = useSelector(getSelectedDepartment)
+  const selectedLocationUuid = useSelector(getSelectedLocation)
   const shouldFetchDepartmentEmployees = useSelector(
     getShouldFetchDepartmentEmployees
+  )
+  const shouldFetchLocationEmployees = useSelector(
+    getShouldFetchLocationEmployees
   )
 
   const { page, limit } = paginationData
@@ -43,6 +51,31 @@ export default function Footer() {
       skip: !shouldFetchDepartmentEmployees,
     }
   )
+
+  const { data: employeesByLocation, isLoading: isEmployeesByLocationLoading } =
+    useGetEmployeesByLocationUuidQuery(
+      { locationUuid: selectedLocationUuid, page, limit },
+      {
+        skip: !shouldFetchLocationEmployees,
+      }
+    )
+
+  useEffect(() => {
+    if (
+      employeesByLocation?.employees &&
+      employeesByLocation?.employees?.length !== 0
+    ) {
+      dispatch(setEmployees(employeesByLocation.employees))
+
+      dispatch(
+        setPaginationData({
+          ...paginationData,
+          pageCount: Math.ceil(employeesByLocation.totalCount / limit),
+          totalCount: employeesByLocation.totalCount,
+        })
+      )
+    }
+  }, [employeesByLocation, isEmployeesByLocationLoading])
 
   useEffect(() => {
     if (
@@ -85,6 +118,10 @@ export default function Footer() {
       dispatch(setShouldFetchDepartmentEmployees(false))
     } else if (activeIndex === 'departments') {
       dispatch(setShouldFetchDepartmentEmployees(true))
+      dispatch(setShouldFetchEmployees(false))
+    } else if (activeIndex === 'locations') {
+      dispatch(setShouldFetchLocationEmployees(true))
+      dispatch(setShouldFetchDepartmentEmployees(false))
       dispatch(setShouldFetchEmployees(false))
     }
 

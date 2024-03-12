@@ -19,8 +19,11 @@ import {
 import { useDispatch } from 'react-redux'
 import { setDepartments, setSelectedDepartment } from '@/store/departments'
 import Employee from '@/components/Employee'
-import { useGetLocationsQuery } from '@/store/api/locationsAPISlice'
-import { setLocations } from '@/store/locations'
+import {
+  useGetEmployeesByLocationUuidQuery,
+  useGetLocationsQuery,
+} from '@/store/api/locationsAPISlice'
+import { setLocations, setSelectedLocation } from '@/store/locations'
 import { setProjects } from '@/store/projects'
 import { useGetProjectsQuery } from '@/store/api/projectsAPISlice'
 import { useGetSkillsQuery } from '@/store/api/skillsAPISlice'
@@ -36,6 +39,7 @@ function Sidebar() {
   const router = useRouter()
   const dispatch = useDispatch()
   const [selectedDepartmentUuid, setSelectedDepartmentUuid] = useState(null)
+  const [selectedLocationUuid, setSelectedLocationUuid] = useState(null)
 
   const { data: departmentsData, isLoading: isDepartmentsLoading } =
     useGetDepartmentsQuery()
@@ -57,6 +61,14 @@ function Sidebar() {
       skip: !selectedDepartmentUuid,
     }
   )
+
+  const { data: employeesByLocation, isLoading: isEmployeesByLocationLoading } =
+    useGetEmployeesByLocationUuidQuery(
+      { locationUuid: selectedLocationUuid, page: 1, limit: 12 },
+      {
+        skip: !selectedLocationUuid,
+      }
+    )
 
   useEffect(() => {
     dispatch(setDepartments(departmentsData))
@@ -94,6 +106,25 @@ function Sidebar() {
     }
   }, [employeesByDepartment])
 
+  useEffect(() => {
+    if (
+      employeesByLocation &&
+      !isEmployeesByLocationLoading &&
+      employeesByLocation.length !== 0
+    ) {
+      dispatch(setEmployees(employeesByLocation.employees))
+
+      dispatch(
+        setPaginationData({
+          page: employeesByLocation.currentPage,
+          limit: 12,
+          pageCount: employeesByLocation.totalPages,
+          totalCount: employeesByLocation.totalCount,
+        })
+      )
+    }
+  }, [employeesByLocation])
+
   function handleDepartmentSelected(departmentUuid) {
     dispatch(setActiveIndex('departments'))
     dispatch(setSelectedDepartment(departmentUuid))
@@ -102,6 +133,13 @@ function Sidebar() {
     setSelectedDepartmentUuid(departmentUuid)
   }
 
+  function handleLocationSelected(locationUuid) {
+    dispatch(setActiveIndex('locations'))
+    dispatch(setSelectedLocation(locationUuid))
+    dispatch(setShouldFetchEmployees(false))
+
+    setSelectedLocationUuid(locationUuid)
+  }
   return (
     <div
       className="bg-neutral relative box-content flex flex-col scroll-auto border-r text-black"
@@ -165,7 +203,6 @@ function Sidebar() {
               <div>Loading departments...</div>
             ) : (
               departmentsData?.map((department) => (
-                // <Text key={department.uuid}>{department.name}</Text>
                 <Text
                   key={department.uuid}
                   onClick={() => handleDepartmentSelected(department.uuid)}
@@ -185,7 +222,14 @@ function Sidebar() {
               <div>Loading locations...</div>
             ) : (
               locationsData?.map((location) => (
-                <Text key={location.uuid}>{location.country}</Text>
+                <Text
+                  key={location.uuid}
+                  onClick={() => handleLocationSelected(location.uuid)}
+                  cursor="pointer"
+                  _hover={{ textDecoration: 'underline' }}
+                >
+                  {location.country}
+                </Text>
               ))
             )}
           </Flex>

@@ -14,7 +14,15 @@ export const locationsAPISlice = createApi({
       }),
       providesTags: ['Location'],
     }),
+    getEmployeesByLocationUuid: builder.query({
+      query: ({ locationUuid, page, limit }) => ({
+        url: `/locations/${locationUuid}/employees`,
+        params: { page, limit },
+      }),
+      providesTags: ['Location'],
+    }),
   }),
 })
 
-export const { useGetLocationsQuery } = locationsAPISlice
+export const { useGetLocationsQuery, useGetEmployeesByLocationUuidQuery } =
+  locationsAPISlice
