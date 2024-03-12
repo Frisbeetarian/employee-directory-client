@@ -9,6 +9,7 @@ const initialState = {
     pageCount: 0,
     totalCount: 0,
   },
+  shouldFetchEmployees: true,
 }
 
 const slice = createSlice({
@@ -20,6 +21,9 @@ const slice = createSlice({
     },
     setPaginationData: (ui, action) => {
       ui.paginationData = action.payload
+    },
+    setShouldFetchEmployees: (ui, action) => {
+      ui.shouldFetchEmployees = action.payload
     },
   },
 })
@@ -34,5 +38,14 @@ export const getPaginationData = createSelector(
   (ui) => ui.paginationData
 )
 
-export const { setIsEmployeeDataLoading, setPaginationData } = slice.actions
+export const getShouldFetchEmployees = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.shouldFetchEmployees
+)
+
+export const {
+  setIsEmployeeDataLoading,
+  setPaginationData,
+  setShouldFetchEmployees,
+} = slice.actions
 export default slice.reducer

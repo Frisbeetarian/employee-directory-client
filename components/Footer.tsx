@@ -5,18 +5,24 @@ import { Flex } from '@chakra-ui/react'
 import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
 import {
   getPaginationData,
+  getShouldFetchEmployees,
   setIsEmployeeDataLoading,
   setPaginationData,
+  setShouldFetchEmployees,
 } from '@/store/ui'
 import { setEmployees } from '@/store/employees'
 
 export default function Footer() {
   const dispatch = useDispatch()
   const paginationData = useSelector(getPaginationData)
+  const shouldFetchEmployees = useSelector(getShouldFetchEmployees)
 
   const { page, limit } = paginationData
 
-  const { data, isLoading } = useGetEmployeesQuery({ page, limit })
+  const { data, isLoading } = useGetEmployeesQuery(
+    { page, limit },
+    { skip: !shouldFetchEmployees }
+  )
 
   useEffect(() => {
     dispatch(setIsEmployeeDataLoading(true))
@@ -36,6 +42,7 @@ export default function Footer() {
 
   const handlePageClick = (event) => {
     const newPage = event.selected + 1
+    dispatch(setShouldFetchEmployees(true))
 
     dispatch(
       setPaginationData({
