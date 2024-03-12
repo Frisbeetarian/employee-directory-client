@@ -12,7 +12,10 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { SettingsIcon, HamburgerIcon, EditIcon } from '@chakra-ui/icons'
-import { useGetDepartmentsQuery } from '@/store/api/departmentsAPISlice'
+import {
+  useGetDepartmentsQuery,
+  useGetEmployeesByDepartmentUuidQuery,
+} from '@/store/api/departmentsAPISlice'
 import { useDispatch } from 'react-redux'
 import { setDepartments } from '@/store/departments'
 import Employee from '@/components/Employee'
@@ -36,6 +39,14 @@ function Sidebar() {
     useGetProjectsQuery()
 
   const { data: skillsData, isLoading: isSkillsLoading } = useGetSkillsQuery()
+
+  const {
+    data: employeesByDepartment,
+    isLoading: isEmployeesByDepartmentLoading,
+  } = useGetEmployeesByDepartmentUuidQuery(
+    { departmentUuid: null },
+    { skip: true }
+  )
 
   useEffect(() => {
     dispatch(setSkills(skillsData))
