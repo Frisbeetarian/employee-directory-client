@@ -47,10 +47,12 @@ function Sidebar() {
   const {
     data: employeesByDepartment,
     isLoading: isEmployeesByDepartmentLoading,
-    refetch,
-  } = useGetEmployeesByDepartmentUuidQuery(selectedDepartmentUuid, {
-    skip: !selectedDepartmentUuid,
-  })
+  } = useGetEmployeesByDepartmentUuidQuery(
+    { departmentUuid: selectedDepartmentUuid, page: 1, limit: 12 },
+    {
+      skip: !selectedDepartmentUuid,
+    }
+  )
 
   useEffect(() => {
     dispatch(setDepartments(departmentsData))

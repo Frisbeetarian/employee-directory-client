@@ -15,8 +15,9 @@ export const departmentsAPISlice = createApi({
       providesTags: ['Department'],
     }),
     getEmployeesByDepartmentUuid: builder.query({
-      query: (departmentUuid) => ({
+      query: ({ departmentUuid, page, limit }) => ({
         url: `/departments/${departmentUuid}/employees`,
+        params: { page, limit },
       }),
       providesTags: ['Department'],
     }),

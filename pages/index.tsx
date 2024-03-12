@@ -1,4 +1,4 @@
-import React, { ReactDOM, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Flex } from '@chakra-ui/react'
 
 import Sidebar from '@/components/Sidebar'
