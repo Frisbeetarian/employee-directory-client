@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import {
   Avatar,
@@ -29,6 +29,8 @@ import { setSkills } from '@/store/skills'
 function Sidebar() {
   const router = useRouter()
   const dispatch = useDispatch()
+  const [selectedDepartmentUuid, setSelectedDepartmentUuid] = useState(null)
+
   const { data: departmentsData, isLoading: isDepartmentsLoading } =
     useGetDepartmentsQuery()
 
@@ -43,10 +45,10 @@ function Sidebar() {
   const {
     data: employeesByDepartment,
     isLoading: isEmployeesByDepartmentLoading,
-  } = useGetEmployeesByDepartmentUuidQuery(
-    { departmentUuid: null },
-    { skip: true }
-  )
+    refetch,
+  } = useGetEmployeesByDepartmentUuidQuery(selectedDepartmentUuid, {
+    skip: !selectedDepartmentUuid,
+  })
 
   useEffect(() => {
     dispatch(setSkills(skillsData))
@@ -127,7 +129,15 @@ function Sidebar() {
               <div>Loading departments...</div>
             ) : (
               departmentsData?.map((department) => (
-                <Text key={department.uuid}>{department.name}</Text>
+                // <Text key={department.uuid}>{department.name}</Text>
+                <Text
+                  key={department.uuid}
+                  onClick={() => setSelectedDepartmentUuid(department.uuid)}
+                  cursor="pointer"
+                  _hover={{ textDecoration: 'underline' }}
+                >
+                  {department.name}
+                </Text>
               ))
             )}
           </Flex>
