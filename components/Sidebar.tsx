@@ -25,6 +25,8 @@ import { setProjects } from '@/store/projects'
 import { useGetProjectsQuery } from '@/store/api/projectsAPISlice'
 import { useGetSkillsQuery } from '@/store/api/skillsAPISlice'
 import { setSkills } from '@/store/skills'
+import { setEmployees } from '@/store/employees'
+import { setPaginationData } from '@/store/ui'
 
 function Sidebar() {
   const router = useRouter()
@@ -51,6 +53,10 @@ function Sidebar() {
   })
 
   useEffect(() => {
+    dispatch(setDepartments(departmentsData))
+  }, [departmentsData])
+
+  useEffect(() => {
     dispatch(setSkills(skillsData))
   }, [skillsData])
 
@@ -63,8 +69,27 @@ function Sidebar() {
   }, [locationsData])
 
   useEffect(() => {
-    dispatch(setDepartments(departmentsData))
-  }, [departmentsData])
+    console.log('employeesByDepartment', employeesByDepartment)
+    if (
+      employeesByDepartment &&
+      !isEmployeesByDepartmentLoading &&
+      employeesByDepartment.length !== 0
+    ) {
+      dispatch(setEmployees(employeesByDepartment.employees))
+      dispatch(
+        setPaginationData({
+          page: employeesByDepartment.currentPage,
+          limit: 12,
+          pageCount: employeesByDepartment.totalPages,
+          totalCount: employeesByDepartment.totalCount,
+        })
+      )
+    }
+  }, [employeesByDepartment])
+
+  function handleDepartmentSelected(departmentUuid) {
+    setSelectedDepartmentUuid(departmentUuid)
+  }
 
   return (
     <div
@@ -132,7 +157,7 @@ function Sidebar() {
                 // <Text key={department.uuid}>{department.name}</Text>
                 <Text
                   key={department.uuid}
-                  onClick={() => setSelectedDepartmentUuid(department.uuid)}
+                  onClick={() => handleDepartmentSelected(department.uuid)}
                   cursor="pointer"
                   _hover={{ textDecoration: 'underline' }}
                 >
