@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Flex } from '@chakra-ui/react'
 import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
 import {
+  getActiveIndex,
   getPaginationData,
   getShouldFetchEmployees,
   setIsEmployeeDataLoading,
@@ -16,6 +17,7 @@ export default function Footer() {
   const dispatch = useDispatch()
   const paginationData = useSelector(getPaginationData)
   const shouldFetchEmployees = useSelector(getShouldFetchEmployees)
+  const activeIndex = useSelector(getActiveIndex)
 
   const { page, limit } = paginationData
 
@@ -26,6 +28,7 @@ export default function Footer() {
 
   useEffect(() => {
     dispatch(setIsEmployeeDataLoading(true))
+
     if (data?.employees && data?.employees?.length !== 0) {
       dispatch(setEmployees(data.employees))
       dispatch(setIsEmployeeDataLoading(false))

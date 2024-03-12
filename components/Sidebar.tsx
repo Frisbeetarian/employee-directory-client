@@ -26,7 +26,11 @@ import { useGetProjectsQuery } from '@/store/api/projectsAPISlice'
 import { useGetSkillsQuery } from '@/store/api/skillsAPISlice'
 import { setSkills } from '@/store/skills'
 import { setEmployees } from '@/store/employees'
-import { setPaginationData, setShouldFetchEmployees } from '@/store/ui'
+import {
+  setActiveIndex,
+  setPaginationData,
+  setShouldFetchEmployees,
+} from '@/store/ui'
 
 function Sidebar() {
   const router = useRouter()
@@ -78,7 +82,6 @@ function Sidebar() {
       employeesByDepartment.length !== 0
     ) {
       dispatch(setEmployees(employeesByDepartment.employees))
-      dispatch(setShouldFetchEmployees(false))
 
       dispatch(
         setPaginationData({
@@ -92,6 +95,9 @@ function Sidebar() {
   }, [employeesByDepartment])
 
   function handleDepartmentSelected(departmentUuid) {
+    dispatch(setActiveIndex('departments'))
+    dispatch(setShouldFetchEmployees(false))
+
     setSelectedDepartmentUuid(departmentUuid)
   }
 

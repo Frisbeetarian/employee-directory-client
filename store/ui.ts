@@ -10,6 +10,7 @@ const initialState = {
     totalCount: 0,
   },
   shouldFetchEmployees: true,
+  activeIndex: 'employees',
 }
 
 const slice = createSlice({
@@ -24,6 +25,9 @@ const slice = createSlice({
     },
     setShouldFetchEmployees: (ui, action) => {
       ui.shouldFetchEmployees = action.payload
+    },
+    setActiveIndex: (ui, action) => {
+      ui.activeIndex = action.payload
     },
   },
 })
@@ -43,9 +47,15 @@ export const getShouldFetchEmployees = createSelector(
   (ui) => ui.shouldFetchEmployees
 )
 
+export const getActiveIndex = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.activeIndex
+)
+
 export const {
   setIsEmployeeDataLoading,
   setPaginationData,
   setShouldFetchEmployees,
+  setActiveIndex,
 } = slice.actions
 export default slice.reducer
