@@ -35,12 +35,31 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSkills } from '@/store/skills'
 import { AddIcon } from '@chakra-ui/icons'
+import { getDepartments } from '@/store/departments'
 
 export default function AppModal() {
   const dispatch = useDispatch()
   const isEmployeeModalOpen = useSelector(getIsAddEmployeeModalOpen)
+  const departments = useSelector(getDepartments)
   const skills = useSelector(getSkills)
 
+  const handleDepartmentSelected = (
+    departmentUuid,
+    selectedDepartments,
+    setFieldValue
+  ) => {
+    let newSelectedDepartments = [...selectedDepartments]
+
+    if (newSelectedDepartments.includes(departmentUuid)) {
+      newSelectedDepartments = newSelectedDepartments.filter(
+        (id) => id !== departmentUuid
+      )
+    } else if (newSelectedDepartments.length < 3) {
+      newSelectedDepartments.push(departmentUuid)
+    }
+
+    setFieldValue('selectedDepartments', newSelectedDepartments)
+  }
   const handleSkillSelected = (skillUuid, selectedSkills, setFieldValue) => {
     let newSelectedSkills = [...selectedSkills]
 
@@ -69,6 +88,7 @@ export default function AppModal() {
             email: '',
             jobTitle: '',
             department: '',
+            selectedDepartments: [],
             selectedSkills: [],
           }}
           onSubmit={(values, actions) => {
@@ -132,73 +152,73 @@ export default function AppModal() {
                 </Flex>
 
                 <Flex className="w-1/2 flex-col">
-                  <Flex className="flex-col">
-                    <Text className="font-bold">Skills</Text>
-
-                    <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
-                      {skills.map((skill) => (
-                        <Tag
-                          className="cursor-pointer"
-                          size="sm"
-                          key={skill.uuid}
-                          variant={
-                            values.selectedSkills.includes(skill.uuid)
-                              ? 'solid'
-                              : 'subtle'
-                          }
-                          colorScheme={
-                            values.selectedSkills.includes(skill.uuid)
-                              ? 'green'
-                              : 'gray'
-                          }
-                          onClick={() =>
-                            handleSkillSelected(
-                              skill.uuid,
-                              values.selectedSkills,
-                              setFieldValue
-                            )
-                          }
-                          _hover={{ background: 'gray.400' }}
-                        >
-                          <TagLeftIcon boxSize="12px" as={AddIcon} />
-                          <TagLabel>{skill.name}</TagLabel>
-                        </Tag>
-                      ))}
-                    </Flex>
-                  </Flex>
-
-                  <Flex className="flex-col">
+                  <Flex className=" flex-col  ">
                     <Text className="font-bold">Departments</Text>
 
                     <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
-                      {skills.map((skill) => (
+                      {departments.map((department) => (
                         <Tag
                           className="cursor-pointer"
                           size="sm"
-                          key={skill.uuid}
+                          key={department.uuid}
                           variant={
-                            values.selectedSkills.includes(skill.uuid)
+                            values.selectedDepartments.includes(department.uuid)
                               ? 'solid'
                               : 'subtle'
                           }
                           colorScheme={
-                            values.selectedSkills.includes(skill.uuid)
+                            values.selectedDepartments.includes(department.uuid)
                               ? 'green'
                               : 'gray'
                           }
                           onClick={() =>
-                            handleSkillSelected(
-                              skill.uuid,
-                              values.selectedSkills,
+                            handleDepartmentSelected(
+                              department.uuid,
+                              values.selectedDepartments,
                               setFieldValue
                             )
                           }
                           _hover={{ background: 'gray.400' }}
                         >
                           <TagLeftIcon boxSize="12px" as={AddIcon} />
-                          <TagLabel>{skill.name}</TagLabel>
+                          <TagLabel>{department.name}</TagLabel>
                         </Tag>
                       ))}
+                    </Flex>
+
+                    <Flex className="mt-5 flex-col">
+                      <Text className="font-bold">Skills</Text>
+
+                      <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
+                        {skills.map((skill) => (
+                          <Tag
+                            className="cursor-pointer"
+                            size="sm"
+                            key={skill.uuid}
+                            variant={
+                              values.selectedSkills.includes(skill.uuid)
+                                ? 'solid'
+                                : 'subtle'
+                            }
+                            colorScheme={
+                              values.selectedSkills.includes(skill.uuid)
+                                ? 'green'
+                                : 'gray'
+                            }
+                            onClick={() =>
+                              handleSkillSelected(
+                                skill.uuid,
+                                values.selectedSkills,
+                                setFieldValue
+                              )
+                            }
+                            _hover={{ background: 'gray.400' }}
+                          >
+                            <TagLeftIcon boxSize="12px" as={AddIcon} />
+                            <TagLabel>{skill.name}</TagLabel>
+                          </Tag>
+                        ))}
+                      </Flex>
                     </Flex>
                   </Flex>
                 </Flex>
