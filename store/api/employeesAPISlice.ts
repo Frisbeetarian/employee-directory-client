@@ -21,8 +21,19 @@ export const employeesAPISlice = createApi({
         method: 'DELETE',
       }),
     }),
+    addEmployee: builder.mutation({
+      query: (employeeData) => ({
+        url: '/employees',
+        method: 'POST',
+        body: employeeData,
+      }),
+      invalidatesTags: ['Employee'],
+    }),
   }),
 })
 
-export const { useGetEmployeesQuery, useDeleteEmployeeMutation } =
-  employeesAPISlice
+export const {
+  useGetEmployeesQuery,
+  useDeleteEmployeeMutation,
+  useAddEmployeeMutation,
+} = employeesAPISlice
