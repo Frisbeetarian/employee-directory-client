@@ -15,20 +15,10 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Checkbox,
-  CheckboxGroup,
-  Stack,
   Text,
   Tag,
-  HStack,
   TagLeftIcon,
   TagLabel,
-  VStack,
   useToast,
 } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
@@ -38,6 +28,7 @@ import { getSkills } from '@/store/skills'
 import { AddIcon } from '@chakra-ui/icons'
 import { getDepartments } from '@/store/departments'
 import { getProjects } from '@/store/projects'
+import { getLocations } from '@/store/locations'
 
 export default function AppModal() {
   const dispatch = useDispatch()
@@ -45,6 +36,7 @@ export default function AppModal() {
   const departments = useSelector(getDepartments)
   const projects = useSelector(getProjects)
   const skills = useSelector(getSkills)
+  const locations = useSelector(getLocations)
   const toast = useToast()
 
   const handleDepartmentSelected = (
@@ -122,6 +114,32 @@ export default function AppModal() {
     setFieldValue('selectedSkills', newSelectedSkills)
   }
 
+  const handleLocationSelected = (
+    locationUuid,
+    selectedLocations,
+    setFieldValue
+  ) => {
+    let newSelectedLocations = [...selectedLocations]
+
+    if (newSelectedLocations.includes(locationUuid)) {
+      newSelectedLocations = newSelectedLocations.filter(
+        (id) => id !== locationUuid
+      )
+    } else if (newSelectedLocations.length < 2) {
+      newSelectedLocations.push(locationUuid)
+    } else {
+      toast({
+        title: 'A maximum of 2 locations can be selected',
+        description: 'Please deselect a location to select another',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom-right',
+      })
+    }
+
+    setFieldValue('selectedLocations', newSelectedLocations)
+  }
   return (
     <Modal
       isOpen={isEmployeeModalOpen}
@@ -141,6 +159,7 @@ export default function AppModal() {
             selectedDepartments: [],
             selectedProjects: [],
             selectedSkills: [],
+            selectedLocations: [],
           }}
           onSubmit={(values, actions) => {
             console.log(values)
@@ -302,6 +321,41 @@ export default function AppModal() {
                           >
                             <TagLeftIcon boxSize="12px" as={AddIcon} />
                             <TagLabel>{skill.name}</TagLabel>
+                          </Tag>
+                        ))}
+                      </Flex>
+                    </Flex>
+
+                    <Flex className="mt-5 flex-col">
+                      <Text className="font-bold">Locations</Text>
+
+                      <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
+                        {locations.map((location) => (
+                          <Tag
+                            className="cursor-pointer"
+                            size="sm"
+                            key={location.uuid}
+                            variant={
+                              values.selectedLocations.includes(location.uuid)
+                                ? 'solid'
+                                : 'subtle'
+                            }
+                            colorScheme={
+                              values.selectedLocations.includes(location.uuid)
+                                ? 'green'
+                                : 'gray'
+                            }
+                            onClick={() =>
+                              handleLocationSelected(
+                                location.uuid,
+                                values.selectedLocations,
+                                setFieldValue
+                              )
+                            }
+                            _hover={{ background: 'gray.400' }}
+                          >
+                            <TagLeftIcon boxSize="12px" as={AddIcon} />
+                            <TagLabel>{location.city}</TagLabel>
                           </Tag>
                         ))}
                       </Flex>
