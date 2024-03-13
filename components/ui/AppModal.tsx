@@ -34,7 +34,8 @@ import { getLocations } from '@/store/locations'
 import { useAddEmployeeMutation } from '@/store/api/employeesAPISlice'
 
 const EmployeeSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
+  firstName: Yup.string().required('First name is required'),
+  lastName: Yup.string().required('Last name is required'),
   email: Yup.string()
     .email('Invalid email address')
     .required('Email is required'),
@@ -193,7 +194,8 @@ export default function AppModal() {
         <ModalCloseButton />
         <Formik
           initialValues={{
-            name: '',
+            firstName: '',
+            lastName: '',
             email: '',
             phoneNumber: '',
             jobTitle: '',
@@ -209,13 +211,39 @@ export default function AppModal() {
             <Form>
               <ModalBody className="flex gap-4">
                 <Flex className="w-1/2 flex-col gap-y-4">
-                  <FormControl isInvalid={touched.name && !!errors.name}>
-                    <FormLabel htmlFor="name">Name</FormLabel>
-                    <Field as={Input} id="name" name="name" type="text" />
-                    {touched.name && errors.name && (
-                      <Text color="red.500">{errors.name}</Text>
-                    )}
-                  </FormControl>
+                  <Flex className="gap-2">
+                    <FormControl
+                      className="w-1/2"
+                      isInvalid={touched.firstName && !!errors.firstName}
+                    >
+                      <FormLabel htmlFor="firstName">First Name</FormLabel>
+                      <Field
+                        as={Input}
+                        id="firstName"
+                        name="firstName"
+                        type="text"
+                      />
+                      {touched.firstName && errors.firstName && (
+                        <Text color="red.500">{errors.firstName}</Text>
+                      )}
+                    </FormControl>
+
+                    <FormControl
+                      className="w-1/2"
+                      isInvalid={touched.lastName && !!errors.lastName}
+                    >
+                      <FormLabel htmlFor="lastName">Last Name</FormLabel>
+                      <Field
+                        as={Input}
+                        id="lastName"
+                        name="lastName"
+                        type="text"
+                      />
+                      {touched.lastName && errors.lastName && (
+                        <Text color="red.500">{errors.lastName}</Text>
+                      )}
+                    </FormControl>
+                  </Flex>
 
                   <FormControl isInvalid={touched.email && !!errors.email}>
                     <FormLabel htmlFor="email">Email</FormLabel>
