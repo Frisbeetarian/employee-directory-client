@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   Button,
   Drawer,
@@ -9,42 +9,17 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Text,
   useToast,
 } from '@chakra-ui/react'
-import { Formik, Form, Field } from 'formik'
 
 import Sidebar from '@/components/Sidebar'
 import NavigationBar from '@/components/NavigationBar'
 import ContentArea from '@/components/ContentArea'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  useDeleteEmployeeMutation,
-  useGetEmployeesQuery,
-} from '@/store/api/employeesAPISlice'
-import {
-  getSelectedEmployee,
-  removeEmployee,
-  setEmployees,
-} from '@/store/employees'
-import {
-  getIsAddEmployeeModalOpen,
-  getIsDrawerOpen,
-  setIsAddEmployeeModalOpen,
-  setIsDrawerOpen,
-  setIsEmployeeDataLoading,
-  setPaginationData,
-} from '@/store/ui'
+import { useDeleteEmployeeMutation } from '@/store/api/employeesAPISlice'
+import { getSelectedEmployee, removeEmployee } from '@/store/employees'
+import { getIsDrawerOpen, setIsDrawerOpen } from '@/store/ui'
 import Footer from '@/components/Footer'
 import AppModal from '@/components/ui/AppModal'
 
@@ -52,7 +27,7 @@ export default function Home() {
   const dispatch = useDispatch()
   const isDrawerOpen = useSelector(getIsDrawerOpen)
   const selectedEmployee = useSelector(getSelectedEmployee)
-  const [deleteEmployee, { isLoading: isDeleting, isSuccess }] =
+  const [deleteEmployee, { isLoading: isDeleting }] =
     useDeleteEmployeeMutation()
   const toast = useToast()
 
