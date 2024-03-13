@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import { useDispatch, useSelector } from 'react-redux'
 import { Flex } from '@chakra-ui/react'
+
 import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
 import {
   getActiveIndex,
@@ -28,6 +29,7 @@ import { useGetEmployeesByProjectUuidQuery } from '@/store/api/projectsAPISlice'
 import { getSelectedProject } from '@/store/projects'
 import { getSelectedSkill } from '@/store/skills'
 import { useGetEmployeesBySkillUuidQuery } from '@/store/api/skillsAPISlice'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 export default function Footer() {
   const dispatch = useDispatch()
@@ -237,11 +239,11 @@ export default function Footer() {
         pageClassName={'page-item'}
         activeClassName={'active'}
         breakLabel="..."
-        nextLabel=">"
+        nextLabel={<ChevronRight />}
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={paginationData.pageCount}
-        previousLabel="<"
+        previousLabel={<ChevronLeft />}
         renderOnZeroPageCount={null}
         forcePage={page - 1}
       />
