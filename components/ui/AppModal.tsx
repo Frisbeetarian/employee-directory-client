@@ -20,6 +20,7 @@ import {
   TagLeftIcon,
   TagLabel,
   useToast,
+  Textarea,
 } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
@@ -298,14 +299,14 @@ export default function AppModal() {
                       as={Input}
                       id="hireDate"
                       name="hireDate"
-                      type="text"
+                      type="date"
                     />
                   </FormControl>
 
                   <FormControl>
                     <FormLabel htmlFor="biography">Biography</FormLabel>
                     <Field
-                      as={Input}
+                      as={Textarea}
                       id="biography"
                       name="biography"
                       type="text"
