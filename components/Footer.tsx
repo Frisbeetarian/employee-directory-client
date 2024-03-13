@@ -71,7 +71,7 @@ export default function Footer() {
     useGetEmployeesByLocationUuidQuery(
       { locationUuid: selectedLocationUuid, page, limit },
       {
-        skip: true,
+        skip: !shouldFetchLocationEmployees,
       }
     )
 
@@ -97,6 +97,7 @@ export default function Footer() {
       employeesByLocation?.employees?.length !== 0
     ) {
       dispatch(setEmployees(employeesByLocation.employees))
+      dispatch(setShouldFetchLocationEmployees(false))
 
       dispatch(
         setPaginationData({

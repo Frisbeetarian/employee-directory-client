@@ -85,13 +85,13 @@ function Sidebar() {
   //   }
   // )
 
-  const { data: employeesByLocation, isLoading: isEmployeesByLocationLoading } =
-    useGetEmployeesByLocationUuidQuery(
-      { locationUuid: selectedLocationUuid, page: 1, limit: 12 },
-      {
-        skip: !selectedLocationUuid,
-      }
-    )
+  // const { data: employeesByLocation, isLoading: isEmployeesByLocationLoading } =
+  //   useGetEmployeesByLocationUuidQuery(
+  //     { locationUuid: selectedLocationUuid, page: 1, limit: 12 },
+  //     {
+  //       skip: !selectedLocationUuid,
+  //     }
+  //   )
 
   const { data: employeesByProject, isLoading: isEmployeesByProjectLoading } =
     useGetEmployeesByProjectUuidQuery(
@@ -144,24 +144,24 @@ function Sidebar() {
   //   }
   // }, [employeesByDepartment])
 
-  useEffect(() => {
-    if (
-      employeesByLocation &&
-      !isEmployeesByLocationLoading &&
-      employeesByLocation.length !== 0
-    ) {
-      dispatch(setEmployees(employeesByLocation.employees))
-
-      dispatch(
-        setPaginationData({
-          page: employeesByLocation.currentPage,
-          limit: 12,
-          pageCount: employeesByLocation.totalPages,
-          totalCount: employeesByLocation.totalCount,
-        })
-      )
-    }
-  }, [employeesByLocation])
+  // useEffect(() => {
+  //   if (
+  //     employeesByLocation &&
+  //     !isEmployeesByLocationLoading &&
+  //     employeesByLocation.length !== 0
+  //   ) {
+  //     dispatch(setEmployees(employeesByLocation.employees))
+  //
+  //     dispatch(
+  //       setPaginationData({
+  //         page: employeesByLocation.currentPage,
+  //         limit: 12,
+  //         pageCount: employeesByLocation.totalPages,
+  //         totalCount: employeesByLocation.totalCount,
+  //       })
+  //     )
+  //   }
+  // }, [employeesByLocation])
 
   useEffect(() => {
     if (
@@ -203,8 +203,11 @@ function Sidebar() {
 
   function handleDepartmentSelected(departmentUuid) {
     dispatch(setActiveIndex('departments'))
+
     dispatch(setShouldFetchEmployees(false))
+    dispatch(setShouldFetchLocationEmployees(false))
     dispatch(setShouldFetchDepartmentEmployees(true))
+
     dispatch(setSelectedDepartment(departmentUuid))
 
     dispatch(
@@ -214,40 +217,24 @@ function Sidebar() {
         limit: 12,
       })
     )
-    // dispatch(setSelectedLocation(null))
-    // dispatch(setSelectedProject(null))
-    // dispatch(setSelectedSkill(null))
-
-    // setSelectedLocationUuid(null)
-    // setSelectedProjectUuid(null)
-    // setSelectedSkillUuid(null)
-
-    // dispatch(setShouldFetchDepartmentEmployees(true))
-    // dispatch(setShouldFetchEmployees(false))
-    // dispatch(setShouldFetchLocationEmployees(false))
-    // dispatch(setShouldFetchProjectEmployees(false))
-    // dispatch(setShouldFetchSkillEmployees(false))
   }
 
   function handleLocationSelected(locationUuid) {
     dispatch(setActiveIndex('locations'))
-    dispatch(setSelectedLocation(locationUuid))
-    // dispatch(setSelectedDepartment(null))
-    // dispatch(setSelectedProject(null))
-    // dispatch(setSelectedSkill(null))
 
     dispatch(setShouldFetchEmployees(false))
-
-    setSelectedLocationUuid(locationUuid)
-    // setSelectedDepartmentUuid(null)
-    // setSelectedProjectUuid(null)
-    // setSelectedSkillUuid(null)
-
+    dispatch(setShouldFetchDepartmentEmployees(false))
     dispatch(setShouldFetchLocationEmployees(true))
-    // dispatch(setShouldFetchDepartmentEmployees(false))
-    // dispatch(setShouldFetchEmployees(false))
-    // dispatch(setShouldFetchProjectEmployees(false))
-    // dispatch(setShouldFetchSkillEmployees(false))
+
+    dispatch(setSelectedLocation(locationUuid))
+
+    dispatch(
+      setPaginationData({
+        ...paginationData,
+        page: 1,
+        limit: 12,
+      })
+    )
   }
 
   function handleProjectSelected(projectUuid) {
