@@ -9,6 +9,12 @@ const initialState = {
     pageCount: 0,
     totalCount: 0,
   },
+  shouldFetchEmployees: true,
+  shouldFetchDepartmentEmployees: false,
+  shouldFetchLocationEmployees: false,
+  shouldFetchProjectEmployees: false,
+  shouldFetchSkillEmployees: false,
+  activeIndex: 'employees',
 }
 
 const slice = createSlice({
@@ -20,6 +26,24 @@ const slice = createSlice({
     },
     setPaginationData: (ui, action) => {
       ui.paginationData = action.payload
+    },
+    setShouldFetchEmployees: (ui, action) => {
+      ui.shouldFetchEmployees = action.payload
+    },
+    setActiveIndex: (ui, action) => {
+      ui.activeIndex = action.payload
+    },
+    setShouldFetchDepartmentEmployees: (ui, action) => {
+      ui.shouldFetchDepartmentEmployees = action.payload
+    },
+    setShouldFetchLocationEmployees: (ui, action) => {
+      ui.shouldFetchLocationEmployees = action.payload
+    },
+    setShouldFetchProjectEmployees: (ui, action) => {
+      ui.shouldFetchProjectEmployees = action.payload
+    },
+    setShouldFetchSkillEmployees: (ui, action) => {
+      ui.shouldFetchSkillEmployees = action.payload
     },
   },
 })
@@ -34,5 +58,44 @@ export const getPaginationData = createSelector(
   (ui) => ui.paginationData
 )
 
-export const { setIsEmployeeDataLoading, setPaginationData } = slice.actions
+export const getShouldFetchEmployees = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.shouldFetchEmployees
+)
+
+export const getActiveIndex = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.activeIndex
+)
+
+export const getShouldFetchDepartmentEmployees = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.shouldFetchDepartmentEmployees
+)
+
+export const getShouldFetchLocationEmployees = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.shouldFetchLocationEmployees
+)
+
+export const getShouldFetchProjectEmployees = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.shouldFetchProjectEmployees
+)
+
+export const getShouldFetchSkillEmployees = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.shouldFetchSkillEmployees
+)
+
+export const {
+  setIsEmployeeDataLoading,
+  setPaginationData,
+  setShouldFetchEmployees,
+  setActiveIndex,
+  setShouldFetchDepartmentEmployees,
+  setShouldFetchLocationEmployees,
+  setShouldFetchProjectEmployees,
+  setShouldFetchSkillEmployees,
+} = slice.actions
 export default slice.reducer

@@ -1,4 +1,4 @@
-import React, { ReactDOM, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Flex } from '@chakra-ui/react'
 
 import Sidebar from '@/components/Sidebar'
@@ -12,24 +12,27 @@ import Footer from '@/components/Footer'
 
 export default function Home() {
   const dispatch = useDispatch()
-  const { data, isLoading } = useGetEmployeesQuery(1, 12)
-
-  useEffect(() => {
-    dispatch(setIsEmployeeDataLoading(true))
-
-    if (data?.employees && data?.employees?.length !== 0) {
-      dispatch(setEmployees(data.employees))
-      dispatch(setIsEmployeeDataLoading(false))
-      dispatch(
-        setPaginationData({
-          page: data.currentPage,
-          limit: 12,
-          totalPages: data.totalPages,
-          totalCount: data.totalCount,
-        })
-      )
-    }
-  }, [isLoading])
+  // const { data, isLoading } = useGetEmployeesQuery(
+  //   { page: 1, limit: 12 },
+  //   { skip: true }
+  // )
+  //
+  // useEffect(() => {
+  //   dispatch(setIsEmployeeDataLoading(true))
+  //
+  //   if (data?.employees && data?.employees?.length !== 0) {
+  //     dispatch(setEmployees(data.employees))
+  //     dispatch(setIsEmployeeDataLoading(false))
+  //     dispatch(
+  //       setPaginationData({
+  //         page: data.currentPage,
+  //         limit: 12,
+  //         pageCount: data.totalPages,
+  //         totalCount: data.totalCount,
+  //       })
+  //     )
+  //   }
+  // }, [isLoading])
 
   return (
     <Flex className="min-h-screen overflow-x-hidden">

@@ -9,7 +9,10 @@ export const employeesAPISlice = createApi({
   tagTypes: ['Employee'],
   endpoints: (builder) => ({
     getEmployees: builder.query({
-      query: ({ page, limit }) => `/employees?page=${page}&limit=${limit}`,
+      query: ({ page = 1, limit = 12, department }) => ({
+        url: '/employees',
+        params: { page, limit, department },
+      }),
       providesTags: ['Employee'],
     }),
     registerUser: builder.mutation({
@@ -18,6 +21,7 @@ export const employeesAPISlice = createApi({
         method: 'POST',
         body: userData,
       }),
+
       invalidatesTags: ['Employee'],
     }),
   }),
