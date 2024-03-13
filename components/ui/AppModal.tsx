@@ -29,6 +29,7 @@ import {
   TagLeftIcon,
   TagLabel,
   VStack,
+  useToast,
 } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
@@ -36,12 +37,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getSkills } from '@/store/skills'
 import { AddIcon } from '@chakra-ui/icons'
 import { getDepartments } from '@/store/departments'
+import { getProjects } from '@/store/projects'
 
 export default function AppModal() {
   const dispatch = useDispatch()
   const isEmployeeModalOpen = useSelector(getIsAddEmployeeModalOpen)
   const departments = useSelector(getDepartments)
+  const projects = useSelector(getProjects)
   const skills = useSelector(getSkills)
+  const toast = useToast()
 
   const handleDepartmentSelected = (
     departmentUuid,
@@ -56,10 +60,47 @@ export default function AppModal() {
       )
     } else if (newSelectedDepartments.length < 3) {
       newSelectedDepartments.push(departmentUuid)
+    } else {
+      toast({
+        title: 'A maximum of 3 departments can be selected',
+        description: 'Please deselect a department to select another',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom-right',
+      })
     }
 
     setFieldValue('selectedDepartments', newSelectedDepartments)
   }
+
+  const handleProjectSelected = (
+    projectUuid,
+    selectedProjects,
+    setFieldValue
+  ) => {
+    let newSelectedProjects = [...selectedProjects]
+
+    if (newSelectedProjects.includes(projectUuid)) {
+      newSelectedProjects = newSelectedProjects.filter(
+        (id) => id !== projectUuid
+      )
+    } else if (newSelectedProjects.length < 3) {
+      newSelectedProjects.push(projectUuid)
+    } else {
+      toast({
+        title: 'A maximum of 3 projects can be selected',
+        description: 'Please deselect a project to select another',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom-right',
+      })
+    }
+
+    setFieldValue('selectedProjects', newSelectedProjects)
+  }
+
   const handleSkillSelected = (skillUuid, selectedSkills, setFieldValue) => {
     let newSelectedSkills = [...selectedSkills]
 
@@ -67,6 +108,15 @@ export default function AppModal() {
       newSelectedSkills = newSelectedSkills.filter((id) => id !== skillUuid)
     } else if (newSelectedSkills.length < 5) {
       newSelectedSkills.push(skillUuid)
+    } else {
+      toast({
+        title: 'A maximum of 5 skills can be selected',
+        description: 'Please deselect a skill to select another',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom-right',
+      })
     }
 
     setFieldValue('selectedSkills', newSelectedSkills)
@@ -89,6 +139,7 @@ export default function AppModal() {
             jobTitle: '',
             department: '',
             selectedDepartments: [],
+            selectedProjects: [],
             selectedSkills: [],
           }}
           onSubmit={(values, actions) => {
@@ -184,6 +235,41 @@ export default function AppModal() {
                           <TagLabel>{department.name}</TagLabel>
                         </Tag>
                       ))}
+                    </Flex>
+
+                    <Flex className="mt-5 flex-col">
+                      <Text className="font-bold">Projects</Text>
+
+                      <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
+                        {projects.map((project) => (
+                          <Tag
+                            className="cursor-pointer"
+                            size="sm"
+                            key={project.uuid}
+                            variant={
+                              values.selectedProjects.includes(project.uuid)
+                                ? 'solid'
+                                : 'subtle'
+                            }
+                            colorScheme={
+                              values.selectedProjects.includes(project.uuid)
+                                ? 'green'
+                                : 'gray'
+                            }
+                            onClick={() =>
+                              handleProjectSelected(
+                                project.uuid,
+                                values.selectedProjects,
+                                setFieldValue
+                              )
+                            }
+                            _hover={{ background: 'gray.400' }}
+                          >
+                            <TagLeftIcon boxSize="12px" as={AddIcon} />
+                            <TagLabel>{project.name}</TagLabel>
+                          </Tag>
+                        ))}
+                      </Flex>
                     </Flex>
 
                     <Flex className="mt-5 flex-col">
