@@ -24,12 +24,22 @@ import {
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import * as Yup from 'yup'
+
 import { getSkills } from '@/store/skills'
 import { AddIcon } from '@chakra-ui/icons'
 import { getDepartments } from '@/store/departments'
 import { getProjects } from '@/store/projects'
 import { getLocations } from '@/store/locations'
 
+const EmployeeSchema = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Email is required'),
+  jobTitle: Yup.string().required('Job title is required'),
+  phoneNumber: Yup.string().required('Phone number is required'),
+})
 export default function AppModal() {
   const dispatch = useDispatch()
   const isEmployeeModalOpen = useSelector(getIsAddEmployeeModalOpen)
@@ -154,33 +164,42 @@ export default function AppModal() {
           initialValues={{
             name: '',
             email: '',
+            phoneNumber: '',
             jobTitle: '',
-            department: '',
             selectedDepartments: [],
             selectedProjects: [],
             selectedSkills: [],
             selectedLocations: [],
           }}
+          validationSchema={EmployeeSchema}
           onSubmit={(values, actions) => {
             console.log(values)
             actions.setSubmitting(false)
           }}
         >
-          {({ values, setFieldValue, isSubmitting }) => (
+          {({ values, setFieldValue, isSubmitting, errors, touched }) => (
             <Form>
               <ModalBody className="flex gap-4">
                 <Flex className="w-1/2 flex-col gap-y-4">
-                  <FormControl>
+                  <FormControl isInvalid={touched.name && !!errors.name}>
                     <FormLabel htmlFor="name">Name</FormLabel>
                     <Field as={Input} id="name" name="name" type="text" />
+                    {touched.name && errors.name && (
+                      <Text color="red.500">{errors.name}</Text>
+                    )}
                   </FormControl>
 
-                  <FormControl>
+                  <FormControl isInvalid={touched.email && !!errors.email}>
                     <FormLabel htmlFor="email">Email</FormLabel>
                     <Field as={Input} id="email" name="email" type="text" />
+                    {touched.email && errors.email && (
+                      <Text color="red.500">{errors.email}</Text>
+                    )}
                   </FormControl>
 
-                  <FormControl>
+                  <FormControl
+                    isInvalid={touched.phoneNumber && !!errors.phoneNumber}
+                  >
                     <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
                     <Field
                       as={Input}
@@ -188,9 +207,14 @@ export default function AppModal() {
                       name="phoneNumber"
                       type="text"
                     />
+                    {touched.phoneNumber && errors.phoneNumber && (
+                      <Text color="red.500">{errors.phoneNumber}</Text>
+                    )}
                   </FormControl>
 
-                  <FormControl>
+                  <FormControl
+                    isInvalid={touched.jobTitle && !!errors.jobTitle}
+                  >
                     <FormLabel htmlFor="jobTitle">Job Title</FormLabel>
                     <Field
                       as={Input}
@@ -198,6 +222,9 @@ export default function AppModal() {
                       name="jobTitle"
                       type="text"
                     />
+                    {touched.jobTitle && errors.jobTitle && (
+                      <Text color="red.500">{errors.jobTitle}</Text>
+                    )}
                   </FormControl>
 
                   <FormControl>
