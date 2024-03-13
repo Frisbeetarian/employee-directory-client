@@ -15,6 +15,7 @@ const initialState = {
   shouldFetchProjectEmployees: false,
   shouldFetchSkillEmployees: false,
   activeIndex: 'employees',
+  isDrawerOpen: false,
 }
 
 const slice = createSlice({
@@ -44,6 +45,9 @@ const slice = createSlice({
     },
     setShouldFetchSkillEmployees: (ui, action) => {
       ui.shouldFetchSkillEmployees = action.payload
+    },
+    setIsDrawerOpen: (ui, action) => {
+      ui.isDrawerOpen = action.payload
     },
   },
 })
@@ -88,6 +92,11 @@ export const getShouldFetchSkillEmployees = createSelector(
   (ui) => ui.shouldFetchSkillEmployees
 )
 
+export const getIsDrawerOpen = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.isDrawerOpen
+)
+
 export const {
   setIsEmployeeDataLoading,
   setPaginationData,
@@ -97,5 +106,6 @@ export const {
   setShouldFetchLocationEmployees,
   setShouldFetchProjectEmployees,
   setShouldFetchSkillEmployees,
+  setIsDrawerOpen,
 } = slice.actions
 export default slice.reducer
