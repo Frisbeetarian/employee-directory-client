@@ -14,7 +14,15 @@ export const projectsAPISlice = createApi({
       }),
       providesTags: ['Project'],
     }),
+    getEmployeesByProjectUuid: builder.query({
+      query: ({ projectUuid, page, limit }) => ({
+        url: `/projects/${projectUuid}/employees`,
+        params: { page, limit },
+      }),
+      providesTags: ['Project'],
+    }),
   }),
 })
 
-export const { useGetProjectsQuery } = projectsAPISlice
+export const { useGetProjectsQuery, useGetEmployeesByProjectUuidQuery } =
+  projectsAPISlice

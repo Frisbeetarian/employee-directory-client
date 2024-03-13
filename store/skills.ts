@@ -3,6 +3,7 @@ import { createSelector } from 'reselect'
 
 const initialState = {
   list: [],
+  selectedSkills: null,
 }
 
 const slice = createSlice({
@@ -14,6 +15,9 @@ const slice = createSlice({
         skills.list = action.payload
       }
     },
+    setSelectedSkills: (skills, action) => {
+      skills.selectedSkills = action.payload
+    },
   },
 })
 
@@ -22,5 +26,10 @@ export const getSkills = createSelector(
   (skills) => skills.list
 )
 
-export const { setSkills } = slice.actions
+export const getSelectedSkills = createSelector(
+  (state) => state.entities.skills,
+  (skills) => skills.selectedSkills
+)
+
+export const { setSkills, setSelectedSkills } = slice.actions
 export default slice.reducer

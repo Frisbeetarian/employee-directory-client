@@ -14,6 +14,13 @@ export const skillsAPISlice = createApi({
       }),
       providesTags: ['Skill'],
     }),
+    getEmployeesBySkillUuid: builder.query({
+      query: ({ skillUuid, page, limit }) => ({
+        url: `/skills/${skillUuid}/employees`,
+        params: { page, limit },
+      }),
+      providesTags: ['Skill'],
+    }),
   }),
 })
 

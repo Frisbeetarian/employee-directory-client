@@ -12,6 +12,8 @@ const initialState = {
   shouldFetchEmployees: true,
   shouldFetchDepartmentEmployees: false,
   shouldFetchLocationEmployees: false,
+  shouldFetchProjectEmployees: false,
+  shouldFetchSkillEmployees: false,
   activeIndex: 'employees',
 }
 
@@ -36,6 +38,12 @@ const slice = createSlice({
     },
     setShouldFetchLocationEmployees: (ui, action) => {
       ui.shouldFetchLocationEmployees = action.payload
+    },
+    setShouldFetchProjectEmployees: (ui, action) => {
+      ui.shouldFetchProjectEmployees = action.payload
+    },
+    setShouldFetchSkillEmployees: (ui, action) => {
+      ui.shouldFetchSkillEmployees = action.payload
     },
   },
 })
@@ -70,6 +78,16 @@ export const getShouldFetchLocationEmployees = createSelector(
   (ui) => ui.shouldFetchLocationEmployees
 )
 
+export const getShouldFetchProjectEmployees = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.shouldFetchProjectEmployees
+)
+
+export const getShouldFetchSKillEmployees = createSelector(
+  (state) => state.entities.ui,
+  (ui) => ui.shouldFetchSKillEmployees
+)
+
 export const {
   setIsEmployeeDataLoading,
   setPaginationData,
@@ -77,5 +95,7 @@ export const {
   setActiveIndex,
   setShouldFetchDepartmentEmployees,
   setShouldFetchLocationEmployees,
+  setShouldFetchProjectEmployees,
+  setShouldFetchSkillEmployees,
 } = slice.actions
 export default slice.reducer
