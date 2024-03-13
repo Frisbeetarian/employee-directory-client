@@ -10,40 +10,27 @@ import {
   DrawerOverlay,
   Flex,
   Input,
+  Text,
 } from '@chakra-ui/react'
 
 import Sidebar from '@/components/Sidebar'
 import NavigationBar from '@/components/NavigationBar'
 import ContentArea from '@/components/ContentArea'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
-import { setEmployees } from '@/store/employees'
-import { setIsEmployeeDataLoading, setPaginationData } from '@/store/ui'
+import { getSelectedEmployee, setEmployees } from '@/store/employees'
+import {
+  getIsDrawerOpen,
+  setIsDrawerOpen,
+  setIsEmployeeDataLoading,
+  setPaginationData,
+} from '@/store/ui'
 import Footer from '@/components/Footer'
 
 export default function Home() {
   const dispatch = useDispatch()
-  // const { data, isLoading } = useGetEmployeesQuery(
-  //   { page: 1, limit: 12 },
-  //   { skip: true }
-  // )
-  //
-  // useEffect(() => {
-  //   dispatch(setIsEmployeeDataLoading(true))
-  //
-  //   if (data?.employees && data?.employees?.length !== 0) {
-  //     dispatch(setEmployees(data.employees))
-  //     dispatch(setIsEmployeeDataLoading(false))
-  //     dispatch(
-  //       setPaginationData({
-  //         page: data.currentPage,
-  //         limit: 12,
-  //         pageCount: data.totalPages,
-  //         totalCount: data.totalCount,
-  //       })
-  //     )
-  //   }
-  // }, [isLoading])
+  const isDrawerOpen = useSelector(getIsDrawerOpen)
+  const selectedEmployee = useSelector(getSelectedEmployee)
 
   return (
     <Flex className="min-h-screen overflow-x-hidden">
@@ -54,30 +41,40 @@ export default function Home() {
         <ContentArea></ContentArea>
 
         <Footer />
+        {selectedEmployee ? (
+          <Drawer
+            isOpen={isDrawerOpen}
+            placement="right"
+            onClose={() => dispatch(setIsDrawerOpen(false))}
+            size="lg"
+            // finalFocusRef={btnRef}
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>{selectedEmployee.name}</DrawerHeader>
 
-        <Drawer
-          isOpen={isOpen}
-          placement="right"
-          onClose={onClose}
-          finalFocusRef={btnRef}
-        >
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>Create your account</DrawerHeader>
+              <DrawerBody>
+                <Text>{selectedEmployee.name}</Text>
+              </DrawerBody>
 
-            <DrawerBody>
-              <Input placeholder="Type here..." />
-            </DrawerBody>
-
-            <DrawerFooter>
-              <Button variant="outline" mr={3} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="blue">Save</Button>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
+              <DrawerFooter>
+                <Button
+                  variant="outline"
+                  mr={3}
+                  onClick={() => {
+                    dispatch(setIsDrawerOpen(false))
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button colorScheme="blue">Save</Button>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+        ) : (
+          <></>
+        )}
       </Flex>
     </Flex>
   )
