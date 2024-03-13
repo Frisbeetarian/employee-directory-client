@@ -294,10 +294,10 @@ function Sidebar() {
       </Flex>
 
       <Flex
-        className="box-content flex items-center justify-between border-t px-4 py-10 md:px-0 md:py-0"
+        className="box-content flex items-center justify-between border-t px-4 py-0"
         style={{ height: '7.5vh' }}
       >
-        <Flex className="items-center px-2">
+        <Flex className="items-center ">
           <Avatar size="md" />
           <p className="ml-2  text-lg">Admin</p>
         </Flex>

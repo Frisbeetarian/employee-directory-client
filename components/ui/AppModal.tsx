@@ -62,7 +62,7 @@ export default function AppModal() {
 
     if (newSelectedDepartments.includes(departmentUuid)) {
       newSelectedDepartments = newSelectedDepartments.filter(
-        (id) => id !== departmentUuid
+        (uuid) => uuid !== departmentUuid
       )
     } else if (newSelectedDepartments.length < 3) {
       newSelectedDepartments.push(departmentUuid)
@@ -89,7 +89,7 @@ export default function AppModal() {
 
     if (newSelectedProjects.includes(projectUuid)) {
       newSelectedProjects = newSelectedProjects.filter(
-        (id) => id !== projectUuid
+        (uuid) => uuid !== projectUuid
       )
     } else if (newSelectedProjects.length < 3) {
       newSelectedProjects.push(projectUuid)
@@ -111,7 +111,7 @@ export default function AppModal() {
     let newSelectedSkills = [...selectedSkills]
 
     if (newSelectedSkills.includes(skillUuid)) {
-      newSelectedSkills = newSelectedSkills.filter((id) => id !== skillUuid)
+      newSelectedSkills = newSelectedSkills.filter((uuid) => uuid !== skillUuid)
     } else if (newSelectedSkills.length < 5) {
       newSelectedSkills.push(skillUuid)
     } else {
@@ -137,7 +137,7 @@ export default function AppModal() {
 
     if (newSelectedLocations.includes(locationUuid)) {
       newSelectedLocations = newSelectedLocations.filter(
-        (id) => id !== locationUuid
+        (uuid) => uuid !== locationUuid
       )
     } else if (newSelectedLocations.length < 2) {
       newSelectedLocations.push(locationUuid)
