@@ -24,10 +24,16 @@ import {
   useGetLocationsQuery,
 } from '@/store/api/locationsAPISlice'
 import { setLocations, setSelectedLocation } from '@/store/locations'
-import { setProjects } from '@/store/projects'
-import { useGetProjectsQuery } from '@/store/api/projectsAPISlice'
-import { useGetSkillsQuery } from '@/store/api/skillsAPISlice'
-import { setSkills } from '@/store/skills'
+import { setProjects, setSelectedProject } from '@/store/projects'
+import {
+  useGetEmployeesByProjectUuidQuery,
+  useGetProjectsQuery,
+} from '@/store/api/projectsAPISlice'
+import {
+  useGetEmployeesBySkillUuidQuery,
+  useGetSkillsQuery,
+} from '@/store/api/skillsAPISlice'
+import { setSelectedSkill, setSkills } from '@/store/skills'
 import { setEmployees } from '@/store/employees'
 import {
   setActiveIndex,
@@ -40,6 +46,8 @@ function Sidebar() {
   const dispatch = useDispatch()
   const [selectedDepartmentUuid, setSelectedDepartmentUuid] = useState(null)
   const [selectedLocationUuid, setSelectedLocationUuid] = useState(null)
+  const [selectedProjectUuid, setSelectedProjectUuid] = useState(null)
+  const [selectedSkillUuid, setSelectedSkillUuid] = useState(null)
 
   const { data: departmentsData, isLoading: isDepartmentsLoading } =
     useGetDepartmentsQuery()
@@ -70,6 +78,22 @@ function Sidebar() {
       }
     )
 
+  const { data: employeesByProject, isLoading: isEmployeesByProjectLoading } =
+    useGetEmployeesByProjectUuidQuery(
+      { projectUuid: selectedProjectUuid, page: 1, limit: 12 },
+      {
+        skip: !selectedProjectUuid,
+      }
+    )
+
+  const { data: employeesBySkill, isLoading: isEmployeesBySkillLoading } =
+    useGetEmployeesBySkillUuidQuery(
+      { skillUuid: selectedSkillUuid, page: 1, limit: 12 },
+      {
+        skip: !selectedSkillUuid,
+      }
+    )
+
   useEffect(() => {
     dispatch(setDepartments(departmentsData))
   }, [departmentsData])
@@ -87,7 +111,6 @@ function Sidebar() {
   }, [locationsData])
 
   useEffect(() => {
-    // console.log('employeesByDepartment', employeesByDepartment)
     if (
       employeesByDepartment &&
       !isEmployeesByDepartmentLoading &&
@@ -125,6 +148,44 @@ function Sidebar() {
     }
   }, [employeesByLocation])
 
+  useEffect(() => {
+    if (
+      employeesByProject &&
+      !isEmployeesByProjectLoading &&
+      employeesByProject.length !== 0
+    ) {
+      dispatch(setEmployees(employeesByProject.employees))
+
+      dispatch(
+        setPaginationData({
+          page: employeesByProject.currentPage,
+          limit: 12,
+          pageCount: employeesByProject.totalPages,
+          totalCount: employeesByProject.totalCount,
+        })
+      )
+    }
+  }, [employeesByProject])
+
+  useEffect(() => {
+    if (
+      employeesBySkill &&
+      !isEmployeesBySkillLoading &&
+      employeesBySkill.length !== 0
+    ) {
+      dispatch(setEmployees(employeesBySkill.employees))
+
+      dispatch(
+        setPaginationData({
+          page: employeesBySkill.currentPage,
+          limit: 12,
+          pageCount: employeesBySkill.totalPages,
+          totalCount: employeesBySkill.totalCount,
+        })
+      )
+    }
+  }, [employeesBySkill])
+
   function handleDepartmentSelected(departmentUuid) {
     dispatch(setActiveIndex('departments'))
     dispatch(setSelectedDepartment(departmentUuid))
@@ -140,6 +201,23 @@ function Sidebar() {
 
     setSelectedLocationUuid(locationUuid)
   }
+
+  function handleProjectSelected(projectUuid) {
+    dispatch(setActiveIndex('projects'))
+    dispatch(setSelectedProject(projectUuid))
+    dispatch(setShouldFetchEmployees(false))
+
+    setSelectedProjectUuid(projectUuid)
+  }
+
+  function handleSkillSelected(skillUuid) {
+    dispatch(setActiveIndex('skills'))
+    dispatch(setSelectedSkill(skillUuid))
+    dispatch(setShouldFetchEmployees(false))
+
+    setSelectedSkillUuid(skillUuid)
+  }
+
   return (
     <div
       className="bg-neutral relative box-content flex flex-col scroll-auto border-r text-black"
@@ -241,7 +319,16 @@ function Sidebar() {
               <div>Loading projects...</div>
             ) : (
               projectsData?.map((project) => (
-                <Text key={project.uuid}>{project.name}</Text>
+                // <Text key={project.uuid}>{project.name}</Text>
+
+                <Text
+                  key={project.uuid}
+                  onClick={() => handleProjectSelected(project.uuid)}
+                  cursor="pointer"
+                  _hover={{ textDecoration: 'underline' }}
+                >
+                  {project.name}
+                </Text>
               ))
             )}
           </Flex>
@@ -253,7 +340,14 @@ function Sidebar() {
               <div>Loading skills...</div>
             ) : (
               skillsData?.map((skill) => (
-                <Text key={skill.uuid}>{skill.name}</Text>
+                <Text
+                  key={skill.uuid}
+                  onClick={() => handleSkillSelected(skill.uuid)}
+                  cursor="pointer"
+                  _hover={{ textDecoration: 'underline' }}
+                >
+                  {skill.name}
+                </Text>
               ))
             )}
           </Flex>

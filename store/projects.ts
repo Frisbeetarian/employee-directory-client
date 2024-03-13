@@ -20,7 +20,7 @@ const slice = createSlice({
         projects.list = action.payload
       }
     },
-    setSelectedProjects: (projects, action) => {
+    setSelectedProject: (projects, action) => {
       projects.selectedProjects = action.payload
     },
   },
@@ -31,10 +31,10 @@ export const getProjects = createSelector(
   (projects) => projects.list
 )
 
-export const getSelectedProjects = createSelector(
+export const getSelectedProject = createSelector(
   (state) => state.entities.projects,
   (projects) => projects.selectedProjects
 )
 
-export const { setProjects, setSelectedProjects } = slice.actions
+export const { setProjects, setSelectedProject } = slice.actions
 export default slice.reducer

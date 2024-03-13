@@ -24,4 +24,5 @@ export const skillsAPISlice = createApi({
   }),
 })
 
-export const { useGetSkillsQuery } = skillsAPISlice
+export const { useGetSkillsQuery, useGetEmployeesBySkillUuidQuery } =
+  skillsAPISlice

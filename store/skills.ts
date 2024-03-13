@@ -15,7 +15,7 @@ const slice = createSlice({
         skills.list = action.payload
       }
     },
-    setSelectedSkills: (skills, action) => {
+    setSelectedSkill: (skills, action) => {
       skills.selectedSkills = action.payload
     },
   },
@@ -26,10 +26,10 @@ export const getSkills = createSelector(
   (skills) => skills.list
 )
 
-export const getSelectedSkills = createSelector(
+export const getSelectedSkill = createSelector(
   (state) => state.entities.skills,
   (skills) => skills.selectedSkills
 )
 
-export const { setSkills, setSelectedSkills } = slice.actions
+export const { setSkills, setSelectedSkill } = slice.actions
 export default slice.reducer
