@@ -31,6 +31,7 @@ import { AddIcon } from '@chakra-ui/icons'
 import { getDepartments } from '@/store/departments'
 import { getProjects } from '@/store/projects'
 import { getLocations } from '@/store/locations'
+import { useAddEmployeeMutation } from '@/store/api/employeesAPISlice'
 
 const EmployeeSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -47,6 +48,7 @@ export default function AppModal() {
   const projects = useSelector(getProjects)
   const skills = useSelector(getSkills)
   const locations = useSelector(getLocations)
+  const [addEmployee] = useAddEmployeeMutation()
   const toast = useToast()
 
   const handleDepartmentSelected = (
@@ -150,6 +152,35 @@ export default function AppModal() {
 
     setFieldValue('selectedLocations', newSelectedLocations)
   }
+
+  async function handleFormSubmit(values, actions) {
+    try {
+      await addEmployee(values).unwrap()
+      toast({
+        title: 'Employee added',
+        description: 'The new employee has been successfully added.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom-right',
+      })
+      actions.resetForm()
+      dispatch(setIsAddEmployeeModalOpen(false))
+    } catch (error) {
+      toast({
+        title: 'Error adding employee',
+        description:
+          'There was a problem adding the new employee. Please try again.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom-right',
+      })
+    } finally {
+      actions.setSubmitting(false)
+    }
+  }
+
   return (
     <Modal
       isOpen={isEmployeeModalOpen}
@@ -172,10 +203,7 @@ export default function AppModal() {
             selectedLocations: [],
           }}
           validationSchema={EmployeeSchema}
-          onSubmit={(values, actions) => {
-            console.log(values)
-            actions.setSubmitting(false)
-          }}
+          onSubmit={handleFormSubmit}
         >
           {({ values, setFieldValue, isSubmitting, errors, touched }) => (
             <Form>
