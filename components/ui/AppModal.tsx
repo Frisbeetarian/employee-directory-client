@@ -32,6 +32,7 @@ import { getDepartments } from '@/store/departments'
 import { getProjects } from '@/store/projects'
 import { getLocations } from '@/store/locations'
 import { useAddEmployeeMutation } from '@/store/api/employeesAPISlice'
+import { addEmployeeToStore } from '@/store/employees'
 
 const EmployeeSchema = Yup.object().shape({
   firstName: Yup.string().required('First name is required'),
@@ -156,17 +157,25 @@ export default function AppModal() {
 
   async function handleFormSubmit(values, actions) {
     try {
-      await addEmployee(values).unwrap()
+      const valuesToSend = {
+        ...values,
+        name: values.firstName + ' ' + values.lastName,
+      }
+      const response = await addEmployee(valuesToSend).unwrap()
+
       toast({
         title: 'Employee added',
-        description: 'The new employee has been successfully added.',
+        description: `${response.name} has been successfully added.`,
         status: 'success',
         duration: 5000,
         isClosable: true,
         position: 'bottom-right',
       })
       actions.resetForm()
+
       dispatch(setIsAddEmployeeModalOpen(false))
+
+      dispatch(addEmployeeToStore(response))
     } catch (error) {
       toast({
         title: 'Error adding employee',
