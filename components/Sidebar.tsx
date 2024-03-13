@@ -316,7 +316,7 @@ function Sidebar() {
       >
         <Flex className="items-center px-2">
           <Avatar size="md" />
-          <p className="ml-2 text-lg ">fwefew</p>
+          <p className="ml-2 bg-gray-200 text-lg">fwefew</p>
         </Flex>
 
         {/*<Flex className="justify-between px-3">*/}
