@@ -21,7 +21,11 @@ import {
   useDeleteEmployeeMutation,
   useGetEmployeesQuery,
 } from '@/store/api/employeesAPISlice'
-import { getSelectedEmployee, setEmployees } from '@/store/employees'
+import {
+  getSelectedEmployee,
+  removeEmployee,
+  setEmployees,
+} from '@/store/employees'
 import {
   getIsDrawerOpen,
   setIsDrawerOpen,
@@ -41,6 +45,7 @@ export default function Home() {
     if (selectedEmployee?.uuid) {
       try {
         await deleteEmployee(selectedEmployee.uuid).unwrap()
+        dispatch(removeEmployee(selectedEmployee.uuid))
         dispatch(setIsDrawerOpen(false))
       } catch (error) {
         console.log(error)

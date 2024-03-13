@@ -18,6 +18,19 @@ const slice = createSlice({
     setSelectedEmployee: (employees, action) => {
       employees.selectedEmployee = action.payload
     },
+    removeEmployee: (employees, action) => {
+      const uuid = action.payload
+      employees.list = employees.list.filter(
+        (employee) => employee.uuid !== uuid
+      )
+
+      if (
+        employees.selectedEmployee &&
+        employees.selectedEmployee.uuid === uuid
+      ) {
+        employees.selectedEmployee = null
+      }
+    },
   },
 })
 
@@ -31,5 +44,6 @@ export const getSelectedEmployee = createSelector(
   (employees) => employees.selectedEmployee
 )
 
-export const { setEmployees, setSelectedEmployee } = slice.actions
+export const { setEmployees, setSelectedEmployee, removeEmployee } =
+  slice.actions
 export default slice.reducer
