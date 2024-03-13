@@ -6,7 +6,7 @@ export const employeesAPISlice = createApi({
     baseUrl: `http://localhost:4020/api`,
     credentials: 'include',
   }),
-  tagTypes: ['Employee'],
+  tagTypes: ['Employee', 'Department'],
   endpoints: (builder) => ({
     getEmployees: builder.query({
       query: ({ page = 1, limit = 12, department }) => ({
@@ -20,7 +20,6 @@ export const employeesAPISlice = createApi({
         url: `/employees/${uuid}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Employee'],
     }),
   }),
 })
