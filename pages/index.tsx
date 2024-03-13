@@ -117,16 +117,19 @@ export default function Home() {
               </DrawerBody>
 
               <DrawerFooter>
-                <Button
-                  variant="outline"
-                  mr={3}
-                  onClick={() => {
-                    dispatch(setIsDrawerOpen(false))
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button colorScheme="blue">Save</Button>
+                <Flex className="w-full justify-between">
+                  <Button
+                    variant="outline"
+                    colorScheme="red"
+                    mr={3}
+                    onClick={() => {
+                      dispatch(setIsDrawerOpen(false))
+                    }}
+                  >
+                    Delete employee record
+                  </Button>
+                  <Button colorScheme="blue">Edit</Button>
+                </Flex>
               </DrawerFooter>
             </DrawerContent>
           </Drawer>

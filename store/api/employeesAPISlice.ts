@@ -15,17 +15,15 @@ export const employeesAPISlice = createApi({
       }),
       providesTags: ['Employee'],
     }),
-    registerUser: builder.mutation({
-      query: (userData) => ({
-        url: '/users/register',
-        method: 'POST',
-        body: userData,
+    deleteEmployee: builder.mutation({
+      query: (uuid) => ({
+        url: `/employees/${uuid}`,
+        method: 'DELETE',
       }),
-
       invalidatesTags: ['Employee'],
     }),
   }),
 })
 
-export const { useGetEmployeesQuery, useRegisterUserMutation } =
+export const { useGetEmployeesQuery, useDeleteEmployeeMutation } =
   employeesAPISlice
