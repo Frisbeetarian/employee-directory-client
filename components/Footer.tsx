@@ -49,8 +49,6 @@ export default function Footer() {
     getShouldFetchProjectEmployees
   )
   const shouldFetchSkillEmployees = useSelector(getShouldFetchSkillEmployees)
-  console.log('selectedskilluuid:', selectedSkillUuid)
-  console.log('shouldFetchSkillEmployees:', shouldFetchSkillEmployees)
 
   const { page, limit } = paginationData
 
@@ -151,7 +149,6 @@ export default function Footer() {
   }, [employeesByProject, isEmployeesByProjectLoading])
 
   useEffect(() => {
-    console.log('employeesBySkill:', employeesBySkill)
     if (
       employeesBySkill?.employees &&
       employeesBySkill?.employees?.length !== 0

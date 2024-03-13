@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Avatar,
   Flex,
@@ -45,6 +45,7 @@ function Sidebar() {
     useGetProjectsQuery()
 
   const { data: skillsData, isLoading: isSkillsLoading } = useGetSkillsQuery()
+  const [selectedFilter, setSelectedFilter] = useState({ type: '', uuid: '' })
 
   useEffect(() => {
     dispatch(setDepartments(departmentsData))
@@ -63,6 +64,8 @@ function Sidebar() {
   }, [locationsData])
 
   function handleDepartmentSelected(departmentUuid) {
+    setSelectedFilter({ type: 'departments', uuid: departmentUuid })
+
     dispatch(setActiveIndex('departments'))
 
     dispatch(setShouldFetchEmployees(false))
@@ -142,6 +145,9 @@ function Sidebar() {
     )
   }
 
+  const isFilterSelected = (type, uuid) =>
+    selectedFilter.type === type && selectedFilter.uuid === uuid
+
   return (
     <div
       className="bg-neutral relative box-content flex flex-col scroll-auto border-r text-black"
@@ -210,6 +216,11 @@ function Sidebar() {
                   onClick={() => handleDepartmentSelected(department.uuid)}
                   cursor="pointer"
                   _hover={{ textDecoration: 'underline' }}
+                  backgroundColor={
+                    isFilterSelected('departments', department.uuid)
+                      ? 'gray.200'
+                      : 'transparent'
+                  }
                 >
                   {department.name}
                 </Text>
