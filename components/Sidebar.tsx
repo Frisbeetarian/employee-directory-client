@@ -86,6 +86,8 @@ function Sidebar() {
   }
 
   function handleLocationSelected(locationUuid) {
+    setSelectedFilter({ type: 'locations', uuid: locationUuid })
+
     dispatch(setActiveIndex('locations'))
 
     dispatch(setShouldFetchEmployees(false))
@@ -106,6 +108,8 @@ function Sidebar() {
   }
 
   function handleProjectSelected(projectUuid) {
+    setSelectedFilter({ type: 'projects', uuid: projectUuid })
+
     dispatch(setActiveIndex('projects'))
 
     dispatch(setShouldFetchEmployees(false))
@@ -126,6 +130,8 @@ function Sidebar() {
   }
 
   function handleSkillSelected(skillUuid) {
+    setSelectedFilter({ type: 'skills', uuid: skillUuid })
+
     dispatch(setActiveIndex('skills'))
 
     dispatch(setShouldFetchEmployees(false))
@@ -240,6 +246,11 @@ function Sidebar() {
                   onClick={() => handleLocationSelected(location.uuid)}
                   cursor="pointer"
                   _hover={{ textDecoration: 'underline' }}
+                  backgroundColor={
+                    isFilterSelected('locations', location.uuid)
+                      ? 'gray.200'
+                      : 'transparent'
+                  }
                 >
                   {location.country}
                 </Text>
@@ -261,6 +272,11 @@ function Sidebar() {
                   onClick={() => handleProjectSelected(project.uuid)}
                   cursor="pointer"
                   _hover={{ textDecoration: 'underline' }}
+                  backgroundColor={
+                    isFilterSelected('projects', project.uuid)
+                      ? 'gray.200'
+                      : 'transparent'
+                  }
                 >
                   {project.name}
                 </Text>
@@ -280,6 +296,11 @@ function Sidebar() {
                   onClick={() => handleSkillSelected(skill.uuid)}
                   cursor="pointer"
                   _hover={{ textDecoration: 'underline' }}
+                  backgroundColor={
+                    isFilterSelected('skills', skill.uuid)
+                      ? 'gray.200'
+                      : 'transparent'
+                  }
                 >
                   {skill.name}
                 </Text>
