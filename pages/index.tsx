@@ -46,7 +46,7 @@ export default function Home() {
             isOpen={isDrawerOpen}
             placement="right"
             onClose={() => dispatch(setIsDrawerOpen(false))}
-            size="lg"
+            size="xl"
             // finalFocusRef={btnRef}
           >
             <DrawerOverlay />
@@ -54,8 +54,66 @@ export default function Home() {
               <DrawerCloseButton />
               <DrawerHeader>{selectedEmployee.name}</DrawerHeader>
 
-              <DrawerBody>
-                <Text>{selectedEmployee.name}</Text>
+              <DrawerBody className="flex  flex-col gap-6">
+                <Flex>
+                  <Text className="font-bold">Name:&nbsp;</Text>
+                  <Text>{selectedEmployee.name}</Text>
+                </Flex>
+
+                <Flex>
+                  <Text className="font-bold">Email:&nbsp;</Text>
+                  <Text>{selectedEmployee.email}</Text>
+                </Flex>
+
+                <Flex>
+                  <Text className="font-bold">Phone number:&nbsp;</Text>
+                  <Text>{selectedEmployee.phoneNumber}</Text>
+                </Flex>
+
+                <Flex>
+                  <Text className="font-bold">Job title:&nbsp;</Text>
+                  <Text>{selectedEmployee.jobTitle}</Text>
+                </Flex>
+
+                <Flex>
+                  <Text className="font-bold">Hire date:&nbsp;</Text>
+                  <Text>{selectedEmployee.hireDate}</Text>
+                </Flex>
+
+                <Flex>
+                  <Text className="font-bold">Biography:&nbsp;</Text>
+                  <Text>{selectedEmployee.biography}</Text>
+                </Flex>
+
+                <Flex className="mt-5 w-full justify-between">
+                  <Flex className="flex-col">
+                    <Text className="font-bold">Departments</Text>
+                    {selectedEmployee?.departments?.map((department) => (
+                      <Text key={department.uuid}>{department.name}</Text>
+                    ))}
+                  </Flex>
+
+                  <Flex className="flex-col">
+                    <Text className="font-bold">Locations</Text>
+                    {selectedEmployee?.locations?.map((location) => (
+                      <Text key={location.uuid}>{location.name}</Text>
+                    ))}
+                  </Flex>
+
+                  <Flex className="flex-col">
+                    <Text className="font-bold">Projects</Text>
+                    {selectedEmployee?.projects?.map((project) => (
+                      <Text key={project.uuid}>{project.name}</Text>
+                    ))}
+                  </Flex>
+
+                  <Flex className="flex-col">
+                    <Text className="font-bold">Skills</Text>
+                    {selectedEmployee?.skills?.map((skill) => (
+                      <Text key={skill.uuid}>{skill.name}</Text>
+                    ))}
+                  </Flex>
+                </Flex>
               </DrawerBody>
 
               <DrawerFooter>
