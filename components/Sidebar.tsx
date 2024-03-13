@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 import {
   Avatar,
   Flex,
@@ -11,36 +10,18 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react'
-import { SettingsIcon, HamburgerIcon, EditIcon } from '@chakra-ui/icons'
-import {
-  useGetDepartmentsQuery,
-  useGetEmployeesByDepartmentUuidQuery,
-} from '@/store/api/departmentsAPISlice'
+
+import { useGetDepartmentsQuery } from '@/store/api/departmentsAPISlice'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  getSelectedDepartment,
-  setDepartments,
-  setSelectedDepartment,
-} from '@/store/departments'
-import {
-  useGetEmployeesByLocationUuidQuery,
-  useGetLocationsQuery,
-} from '@/store/api/locationsAPISlice'
+import { setDepartments, setSelectedDepartment } from '@/store/departments'
+import { useGetLocationsQuery } from '@/store/api/locationsAPISlice'
 import { setLocations, setSelectedLocation } from '@/store/locations'
 import { setProjects, setSelectedProject } from '@/store/projects'
-import {
-  useGetEmployeesByProjectUuidQuery,
-  useGetProjectsQuery,
-} from '@/store/api/projectsAPISlice'
-import {
-  useGetEmployeesBySkillUuidQuery,
-  useGetSkillsQuery,
-} from '@/store/api/skillsAPISlice'
+import { useGetProjectsQuery } from '@/store/api/projectsAPISlice'
+import { useGetSkillsQuery } from '@/store/api/skillsAPISlice'
 import { setSelectedSkill, setSkills } from '@/store/skills'
-import { setEmployees } from '@/store/employees'
 import {
   getPaginationData,
-  getShouldFetchDepartmentEmployees,
   setActiveIndex,
   setPaginationData,
   setShouldFetchDepartmentEmployees,
@@ -51,18 +32,8 @@ import {
 } from '@/store/ui'
 
 function Sidebar() {
-  const router = useRouter()
   const dispatch = useDispatch()
   const paginationData = useSelector(getPaginationData)
-
-  // const [selectedDepartmentUuid, setSelectedDepartmentUuid] = useState(null)
-  const [selectedLocationUuid, setSelectedLocationUuid] = useState(null)
-  const [selectedProjectUuid, setSelectedProjectUuid] = useState(null)
-  const [selectedSkillUuid, setSelectedSkillUuid] = useState(null)
-  const shouldFetchDepartmentEmployees = useSelector(
-    getShouldFetchDepartmentEmployees
-  )
-  const selectedDepartmentUuid = useSelector(getSelectedDepartment)
 
   const { data: departmentsData, isLoading: isDepartmentsLoading } =
     useGetDepartmentsQuery()
@@ -74,40 +45,6 @@ function Sidebar() {
     useGetProjectsQuery()
 
   const { data: skillsData, isLoading: isSkillsLoading } = useGetSkillsQuery()
-
-  // const {
-  //   data: employeesByDepartment,
-  //   isLoading: isEmployeesByDepartmentLoading,
-  // } = useGetEmployeesByDepartmentUuidQuery(
-  //   { departmentUuid: selectedDepartmentUuid, page: 1, limit: 12 },
-  //   {
-  //     skip: !shouldFetchDepartmentEmployees,
-  //   }
-  // )
-
-  // const { data: employeesByLocation, isLoading: isEmployeesByLocationLoading } =
-  //   useGetEmployeesByLocationUuidQuery(
-  //     { locationUuid: selectedLocationUuid, page: 1, limit: 12 },
-  //     {
-  //       skip: !selectedLocationUuid,
-  //     }
-  //   )
-
-  const { data: employeesByProject, isLoading: isEmployeesByProjectLoading } =
-    useGetEmployeesByProjectUuidQuery(
-      { projectUuid: selectedProjectUuid, page: 1, limit: 12 },
-      {
-        skip: !selectedProjectUuid,
-      }
-    )
-
-  const { data: employeesBySkill, isLoading: isEmployeesBySkillLoading } =
-    useGetEmployeesBySkillUuidQuery(
-      { skillUuid: selectedSkillUuid, page: 1, limit: 12 },
-      {
-        skip: !selectedSkillUuid,
-      }
-    )
 
   useEffect(() => {
     dispatch(setDepartments(departmentsData))
@@ -125,87 +62,13 @@ function Sidebar() {
     dispatch(setLocations(locationsData))
   }, [locationsData])
 
-  // useEffect(() => {
-  //   if (
-  //     employeesByDepartment &&
-  //     !isEmployeesByDepartmentLoading &&
-  //     employeesByDepartment.length !== 0
-  //   ) {
-  //     dispatch(setEmployees(employeesByDepartment.employees))
-  //
-  //     dispatch(
-  //       setPaginationData({
-  //         page: employeesByDepartment.currentPage,
-  //         limit: 12,
-  //         pageCount: employeesByDepartment.totalPages,
-  //         totalCount: employeesByDepartment.totalCount,
-  //       })
-  //     )
-  //   }
-  // }, [employeesByDepartment])
-
-  // useEffect(() => {
-  //   if (
-  //     employeesByLocation &&
-  //     !isEmployeesByLocationLoading &&
-  //     employeesByLocation.length !== 0
-  //   ) {
-  //     dispatch(setEmployees(employeesByLocation.employees))
-  //
-  //     dispatch(
-  //       setPaginationData({
-  //         page: employeesByLocation.currentPage,
-  //         limit: 12,
-  //         pageCount: employeesByLocation.totalPages,
-  //         totalCount: employeesByLocation.totalCount,
-  //       })
-  //     )
-  //   }
-  // }, [employeesByLocation])
-
-  useEffect(() => {
-    if (
-      employeesByProject &&
-      !isEmployeesByProjectLoading &&
-      employeesByProject.length !== 0
-    ) {
-      dispatch(setEmployees(employeesByProject.employees))
-
-      dispatch(
-        setPaginationData({
-          page: employeesByProject.currentPage,
-          limit: 12,
-          pageCount: employeesByProject.totalPages,
-          totalCount: employeesByProject.totalCount,
-        })
-      )
-    }
-  }, [employeesByProject])
-
-  useEffect(() => {
-    if (
-      employeesBySkill &&
-      !isEmployeesBySkillLoading &&
-      employeesBySkill.length !== 0
-    ) {
-      dispatch(setEmployees(employeesBySkill.employees))
-
-      dispatch(
-        setPaginationData({
-          page: employeesBySkill.currentPage,
-          limit: 12,
-          pageCount: employeesBySkill.totalPages,
-          totalCount: employeesBySkill.totalCount,
-        })
-      )
-    }
-  }, [employeesBySkill])
-
   function handleDepartmentSelected(departmentUuid) {
     dispatch(setActiveIndex('departments'))
 
     dispatch(setShouldFetchEmployees(false))
     dispatch(setShouldFetchLocationEmployees(false))
+    dispatch(setShouldFetchProjectEmployees(false))
+    dispatch(setShouldFetchSkillEmployees(false))
     dispatch(setShouldFetchDepartmentEmployees(true))
 
     dispatch(setSelectedDepartment(departmentUuid))
@@ -224,6 +87,8 @@ function Sidebar() {
 
     dispatch(setShouldFetchEmployees(false))
     dispatch(setShouldFetchDepartmentEmployees(false))
+    dispatch(setShouldFetchProjectEmployees(false))
+    dispatch(setShouldFetchSkillEmployees(false))
     dispatch(setShouldFetchLocationEmployees(true))
 
     dispatch(setSelectedLocation(locationUuid))
@@ -239,44 +104,42 @@ function Sidebar() {
 
   function handleProjectSelected(projectUuid) {
     dispatch(setActiveIndex('projects'))
-    dispatch(setSelectedProject(projectUuid))
-    // dispatch(setSelectedDepartment(null))
-    // dispatch(setSelectedLocation(null))
-    // dispatch(setSelectedSkill(null))
 
     dispatch(setShouldFetchEmployees(false))
-
-    setSelectedProjectUuid(projectUuid)
-    // setSelectedDepartmentUuid(null)
-    // setSelectedLocationUuid(null)
-    // setSelectedSkillUuid(null)
-
+    dispatch(setShouldFetchDepartmentEmployees(false))
+    dispatch(setShouldFetchLocationEmployees(false))
+    dispatch(setShouldFetchSkillEmployees(false))
     dispatch(setShouldFetchProjectEmployees(true))
-    // dispatch(setShouldFetchLocationEmployees(false))
-    // dispatch(setShouldFetchDepartmentEmployees(false))
-    // dispatch(setShouldFetchEmployees(false))
-    // dispatch(setShouldFetchSkillEmployees(false))
+
+    dispatch(setSelectedProject(projectUuid))
+
+    dispatch(
+      setPaginationData({
+        ...paginationData,
+        page: 1,
+        limit: 12,
+      })
+    )
   }
 
   function handleSkillSelected(skillUuid) {
     dispatch(setActiveIndex('skills'))
-    dispatch(setSelectedSkill(skillUuid))
-    // dispatch(setSelectedDepartment(null))
-    // dispatch(setSelectedProject(null))
-    // dispatch(setSelectedLocation(null))
 
     dispatch(setShouldFetchEmployees(false))
-
-    setSelectedSkillUuid(skillUuid)
-    // setSelectedDepartmentUuid(null)
-    // setSelectedLocationUuid(null)
-    // setSelectedProjectUuid(null)
-
+    dispatch(setShouldFetchDepartmentEmployees(false))
+    dispatch(setShouldFetchLocationEmployees(false))
+    dispatch(setShouldFetchProjectEmployees(false))
     dispatch(setShouldFetchSkillEmployees(true))
-    // dispatch(setShouldFetchLocationEmployees(false))
-    // dispatch(setShouldFetchDepartmentEmployees(false))
-    // dispatch(setShouldFetchEmployees(false))
-    // dispatch(setShouldFetchProjectEmployees(false))
+
+    dispatch(setSelectedSkill(skillUuid))
+
+    dispatch(
+      setPaginationData({
+        ...paginationData,
+        page: 1,
+        limit: 12,
+      })
+    )
   }
 
   return (

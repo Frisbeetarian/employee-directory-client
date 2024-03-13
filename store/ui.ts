@@ -85,7 +85,7 @@ export const getShouldFetchProjectEmployees = createSelector(
 
 export const getShouldFetchSkillEmployees = createSelector(
   (state) => state.entities.ui,
-  (ui) => ui.shouldFetchSKillEmployees
+  (ui) => ui.shouldFetchSkillEmployees
 )
 
 export const {
