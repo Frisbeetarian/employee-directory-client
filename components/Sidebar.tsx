@@ -299,33 +299,8 @@ function Sidebar() {
       >
         <Flex className="items-center px-2">
           <Avatar size="md" />
-          <p className="ml-2 bg-gray-200 text-lg">fwefew</p>
+          <p className="ml-2  text-lg">Admin</p>
         </Flex>
-
-        {/*<Flex className="justify-between px-3">*/}
-        {/*  <Menu>*/}
-        {/*    <MenuButton>*/}
-        {/*      <SettingsIcon />*/}
-        {/*    </MenuButton>*/}
-
-        {/*    <MenuList bg="black" className="" border="none" borderRadius="0">*/}
-        {/*      <MenuItem*/}
-        {/*        bg="bg-black"*/}
-        {/*        className="bg-black"*/}
-        {/*        border="none"*/}
-        {/*        onClick={async () => {*/}
-        {/*          try {*/}
-        {/*            router.replace('/')*/}
-        {/*          } catch (error) {*/}
-        {/*            console.error('Error logging out:', error)*/}
-        {/*          }*/}
-        {/*        }}*/}
-        {/*      >*/}
-        {/*        Logout*/}
-        {/*      </MenuItem>*/}
-        {/*    </MenuList>*/}
-        {/*  </Menu>*/}
-        {/*</Flex>*/}
       </Flex>
     </div>
   )
