@@ -71,7 +71,7 @@ export default function Footer() {
     useGetEmployeesByLocationUuidQuery(
       { locationUuid: selectedLocationUuid, page, limit },
       {
-        skip: !shouldFetchLocationEmployees,
+        skip: true,
       }
     )
 
@@ -100,7 +100,8 @@ export default function Footer() {
 
       dispatch(
         setPaginationData({
-          ...paginationData,
+          page: employeesByLocation.currentPage,
+          limit: 12,
           pageCount: Math.ceil(employeesByLocation.totalCount / limit),
           totalCount: employeesByLocation.totalCount,
         })
@@ -114,10 +115,12 @@ export default function Footer() {
       employeesByDepartment?.employees?.length !== 0
     ) {
       dispatch(setEmployees(employeesByDepartment.employees))
+      dispatch(setShouldFetchDepartmentEmployees(false))
 
       dispatch(
         setPaginationData({
-          ...paginationData,
+          page: employeesByDepartment.currentPage,
+          limit: 12,
           pageCount: Math.ceil(employeesByDepartment.totalCount / limit),
           totalCount: employeesByDepartment.totalCount,
         })
@@ -134,7 +137,8 @@ export default function Footer() {
 
       dispatch(
         setPaginationData({
-          ...paginationData,
+          page: employeesByProject.currentPage,
+          limit: 12,
           pageCount: Math.ceil(employeesByProject.totalCount / limit),
           totalCount: employeesByProject.totalCount,
         })
@@ -151,7 +155,8 @@ export default function Footer() {
 
       dispatch(
         setPaginationData({
-          ...paginationData,
+          page: employeesBySkill.currentPage,
+          limit: 12,
           pageCount: Math.ceil(employeesBySkill.totalCount / limit),
           totalCount: employeesBySkill.totalCount,
         })
@@ -168,7 +173,8 @@ export default function Footer() {
 
       dispatch(
         setPaginationData({
-          ...paginationData,
+          page: data.currentPage,
+          limit: 12,
           pageCount: Math.ceil(data.totalCount / limit),
           totalCount: data.totalCount,
         })
@@ -192,21 +198,21 @@ export default function Footer() {
       dispatch(setShouldFetchSkillEmployees(false))
     } else if (activeIndex === 'locations') {
       dispatch(setShouldFetchLocationEmployees(true))
-      dispatch(setShouldFetchDepartmentEmployees(false))
       dispatch(setShouldFetchEmployees(false))
+      dispatch(setShouldFetchDepartmentEmployees(false))
       dispatch(setShouldFetchProjectEmployees(false))
       dispatch(setShouldFetchSkillEmployees(false))
     } else if (activeIndex === 'projects') {
       dispatch(setShouldFetchProjectEmployees(true))
-      dispatch(setShouldFetchLocationEmployees(false))
-      dispatch(setShouldFetchDepartmentEmployees(false))
       dispatch(setShouldFetchEmployees(false))
+      dispatch(setShouldFetchDepartmentEmployees(false))
+      dispatch(setShouldFetchLocationEmployees(false))
       dispatch(setShouldFetchSkillEmployees(false))
     } else if (activeIndex === 'skills') {
       dispatch(setShouldFetchSkillEmployees(true))
-      dispatch(setShouldFetchLocationEmployees(false))
-      dispatch(setShouldFetchDepartmentEmployees(false))
       dispatch(setShouldFetchEmployees(false))
+      dispatch(setShouldFetchDepartmentEmployees(false))
+      dispatch(setShouldFetchLocationEmployees(false))
       dispatch(setShouldFetchProjectEmployees(false))
     }
 

@@ -16,8 +16,12 @@ import {
   useGetDepartmentsQuery,
   useGetEmployeesByDepartmentUuidQuery,
 } from '@/store/api/departmentsAPISlice'
-import { useDispatch } from 'react-redux'
-import { setDepartments, setSelectedDepartment } from '@/store/departments'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  getSelectedDepartment,
+  setDepartments,
+  setSelectedDepartment,
+} from '@/store/departments'
 import {
   useGetEmployeesByLocationUuidQuery,
   useGetLocationsQuery,
@@ -35,18 +39,30 @@ import {
 import { setSelectedSkill, setSkills } from '@/store/skills'
 import { setEmployees } from '@/store/employees'
 import {
+  getPaginationData,
+  getShouldFetchDepartmentEmployees,
   setActiveIndex,
   setPaginationData,
+  setShouldFetchDepartmentEmployees,
   setShouldFetchEmployees,
+  setShouldFetchLocationEmployees,
+  setShouldFetchProjectEmployees,
+  setShouldFetchSkillEmployees,
 } from '@/store/ui'
 
 function Sidebar() {
   const router = useRouter()
   const dispatch = useDispatch()
-  const [selectedDepartmentUuid, setSelectedDepartmentUuid] = useState(null)
+  const paginationData = useSelector(getPaginationData)
+
+  // const [selectedDepartmentUuid, setSelectedDepartmentUuid] = useState(null)
   const [selectedLocationUuid, setSelectedLocationUuid] = useState(null)
   const [selectedProjectUuid, setSelectedProjectUuid] = useState(null)
   const [selectedSkillUuid, setSelectedSkillUuid] = useState(null)
+  const shouldFetchDepartmentEmployees = useSelector(
+    getShouldFetchDepartmentEmployees
+  )
+  const selectedDepartmentUuid = useSelector(getSelectedDepartment)
 
   const { data: departmentsData, isLoading: isDepartmentsLoading } =
     useGetDepartmentsQuery()
@@ -59,15 +75,15 @@ function Sidebar() {
 
   const { data: skillsData, isLoading: isSkillsLoading } = useGetSkillsQuery()
 
-  const {
-    data: employeesByDepartment,
-    isLoading: isEmployeesByDepartmentLoading,
-  } = useGetEmployeesByDepartmentUuidQuery(
-    { departmentUuid: selectedDepartmentUuid, page: 1, limit: 12 },
-    {
-      skip: !selectedDepartmentUuid,
-    }
-  )
+  // const {
+  //   data: employeesByDepartment,
+  //   isLoading: isEmployeesByDepartmentLoading,
+  // } = useGetEmployeesByDepartmentUuidQuery(
+  //   { departmentUuid: selectedDepartmentUuid, page: 1, limit: 12 },
+  //   {
+  //     skip: !shouldFetchDepartmentEmployees,
+  //   }
+  // )
 
   const { data: employeesByLocation, isLoading: isEmployeesByLocationLoading } =
     useGetEmployeesByLocationUuidQuery(
@@ -109,24 +125,24 @@ function Sidebar() {
     dispatch(setLocations(locationsData))
   }, [locationsData])
 
-  useEffect(() => {
-    if (
-      employeesByDepartment &&
-      !isEmployeesByDepartmentLoading &&
-      employeesByDepartment.length !== 0
-    ) {
-      dispatch(setEmployees(employeesByDepartment.employees))
-
-      dispatch(
-        setPaginationData({
-          page: employeesByDepartment.currentPage,
-          limit: 12,
-          pageCount: employeesByDepartment.totalPages,
-          totalCount: employeesByDepartment.totalCount,
-        })
-      )
-    }
-  }, [employeesByDepartment])
+  // useEffect(() => {
+  //   if (
+  //     employeesByDepartment &&
+  //     !isEmployeesByDepartmentLoading &&
+  //     employeesByDepartment.length !== 0
+  //   ) {
+  //     dispatch(setEmployees(employeesByDepartment.employees))
+  //
+  //     dispatch(
+  //       setPaginationData({
+  //         page: employeesByDepartment.currentPage,
+  //         limit: 12,
+  //         pageCount: employeesByDepartment.totalPages,
+  //         totalCount: employeesByDepartment.totalCount,
+  //       })
+  //     )
+  //   }
+  // }, [employeesByDepartment])
 
   useEffect(() => {
     if (
@@ -187,34 +203,93 @@ function Sidebar() {
 
   function handleDepartmentSelected(departmentUuid) {
     dispatch(setActiveIndex('departments'))
-    dispatch(setSelectedDepartment(departmentUuid))
     dispatch(setShouldFetchEmployees(false))
+    dispatch(setShouldFetchDepartmentEmployees(true))
+    dispatch(setSelectedDepartment(departmentUuid))
 
-    setSelectedDepartmentUuid(departmentUuid)
+    dispatch(
+      setPaginationData({
+        ...paginationData,
+        page: 1,
+        limit: 12,
+      })
+    )
+    // dispatch(setSelectedLocation(null))
+    // dispatch(setSelectedProject(null))
+    // dispatch(setSelectedSkill(null))
+
+    // setSelectedLocationUuid(null)
+    // setSelectedProjectUuid(null)
+    // setSelectedSkillUuid(null)
+
+    // dispatch(setShouldFetchDepartmentEmployees(true))
+    // dispatch(setShouldFetchEmployees(false))
+    // dispatch(setShouldFetchLocationEmployees(false))
+    // dispatch(setShouldFetchProjectEmployees(false))
+    // dispatch(setShouldFetchSkillEmployees(false))
   }
 
   function handleLocationSelected(locationUuid) {
     dispatch(setActiveIndex('locations'))
     dispatch(setSelectedLocation(locationUuid))
+    // dispatch(setSelectedDepartment(null))
+    // dispatch(setSelectedProject(null))
+    // dispatch(setSelectedSkill(null))
+
     dispatch(setShouldFetchEmployees(false))
 
     setSelectedLocationUuid(locationUuid)
+    // setSelectedDepartmentUuid(null)
+    // setSelectedProjectUuid(null)
+    // setSelectedSkillUuid(null)
+
+    dispatch(setShouldFetchLocationEmployees(true))
+    // dispatch(setShouldFetchDepartmentEmployees(false))
+    // dispatch(setShouldFetchEmployees(false))
+    // dispatch(setShouldFetchProjectEmployees(false))
+    // dispatch(setShouldFetchSkillEmployees(false))
   }
 
   function handleProjectSelected(projectUuid) {
     dispatch(setActiveIndex('projects'))
     dispatch(setSelectedProject(projectUuid))
+    // dispatch(setSelectedDepartment(null))
+    // dispatch(setSelectedLocation(null))
+    // dispatch(setSelectedSkill(null))
+
     dispatch(setShouldFetchEmployees(false))
 
     setSelectedProjectUuid(projectUuid)
+    // setSelectedDepartmentUuid(null)
+    // setSelectedLocationUuid(null)
+    // setSelectedSkillUuid(null)
+
+    dispatch(setShouldFetchProjectEmployees(true))
+    // dispatch(setShouldFetchLocationEmployees(false))
+    // dispatch(setShouldFetchDepartmentEmployees(false))
+    // dispatch(setShouldFetchEmployees(false))
+    // dispatch(setShouldFetchSkillEmployees(false))
   }
 
   function handleSkillSelected(skillUuid) {
     dispatch(setActiveIndex('skills'))
     dispatch(setSelectedSkill(skillUuid))
+    // dispatch(setSelectedDepartment(null))
+    // dispatch(setSelectedProject(null))
+    // dispatch(setSelectedLocation(null))
+
     dispatch(setShouldFetchEmployees(false))
 
     setSelectedSkillUuid(skillUuid)
+    // setSelectedDepartmentUuid(null)
+    // setSelectedLocationUuid(null)
+    // setSelectedProjectUuid(null)
+
+    dispatch(setShouldFetchSkillEmployees(true))
+    // dispatch(setShouldFetchLocationEmployees(false))
+    // dispatch(setShouldFetchDepartmentEmployees(false))
+    // dispatch(setShouldFetchEmployees(false))
+    // dispatch(setShouldFetchProjectEmployees(false))
   }
 
   return (
