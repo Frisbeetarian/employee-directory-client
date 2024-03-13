@@ -24,6 +24,7 @@ import { setSelectedSkill, setSkills } from '@/store/skills'
 import {
   getPaginationData,
   setActiveIndex,
+  setIsAddEmployeeModalOpen,
   setPaginationData,
   setShouldFetchDepartmentEmployees,
   setShouldFetchEmployees,
@@ -175,7 +176,12 @@ function Sidebar() {
           />
 
           <MenuList>
-            <MenuItem icon={<UserPlus />} onClick={async () => {}}>
+            <MenuItem
+              icon={<UserPlus />}
+              onClick={async () => {
+                dispatch(setIsAddEmployeeModalOpen(true))
+              }}
+            >
               Add Employee
             </MenuItem>
           </MenuList>
