@@ -11,6 +11,7 @@ import {
   Flex,
   Input,
   Text,
+  useToast,
 } from '@chakra-ui/react'
 
 import Sidebar from '@/components/Sidebar'
@@ -40,6 +41,7 @@ export default function Home() {
   const selectedEmployee = useSelector(getSelectedEmployee)
   const [deleteEmployee, { isLoading: isDeleting, isSuccess }] =
     useDeleteEmployeeMutation()
+  const toast = useToast()
 
   const handleDelete = async () => {
     if (selectedEmployee?.uuid) {
@@ -47,8 +49,27 @@ export default function Home() {
         await deleteEmployee(selectedEmployee.uuid).unwrap()
         dispatch(removeEmployee(selectedEmployee.uuid))
         dispatch(setIsDrawerOpen(false))
+
+        toast({
+          title: 'Employee deleted',
+          description: `${selectedEmployee.name} has been successfully deleted.`,
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+          position: 'bottom-right',
+        })
       } catch (error) {
         console.log(error)
+
+        toast({
+          title: 'Error deleting employee',
+          description:
+            'There was an error deleting the employee. Please try again.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'bottom-right',
+        })
       }
     }
   }
