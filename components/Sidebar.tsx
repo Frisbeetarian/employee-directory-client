@@ -10,6 +10,7 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react'
+import { AlignJustify, EditIcon, UserPlus } from 'lucide-react'
 
 import { useGetDepartmentsQuery } from '@/store/api/departmentsAPISlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -160,49 +161,25 @@ function Sidebar() {
       style={{ width: '15vw', minWidth: '15vw', height: '100vh' }}
     >
       <Flex
-        className=" border-b p-4"
+        className="items-center justify-between border-b p-4"
         style={{ height: '7.5vh', minHeight: '7.5vh' }}
       >
         <p className="text-lg leading-tight">Employee Directory</p>
 
-        {/*<Menu>*/}
-        {/*  <MenuButton*/}
-        {/*    as={IconButton}*/}
-        {/*    aria-label="Options"*/}
-        {/*    icon={<HamburgerIcon />}*/}
-        {/*    variant="outline"*/}
-        {/*    color="black"*/}
-        {/*    className="mr-3 "*/}
-        {/*    border="none"*/}
-        {/*    borderRadius="0"*/}
-        {/*    style={{*/}
-        {/*      zIndex: 10,*/}
-        {/*    }}*/}
-        {/*  />*/}
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label="Options"
+            icon={<AlignJustify />}
+            variant="outline"
+          />
 
-        {/*  <MenuList*/}
-        {/*    bg="black"*/}
-        {/*    className="z-10 "*/}
-        {/*    border="none"*/}
-        {/*    borderRadius="0"*/}
-        {/*    style={{*/}
-        {/*      zIndex: 10,*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    <MenuItem*/}
-        {/*      bg="black"*/}
-        {/*      className="z-10 "*/}
-        {/*      border="none"*/}
-        {/*      icon={<EditIcon />}*/}
-        {/*      style={{*/}
-        {/*        zIndex: 100,*/}
-        {/*      }}*/}
-        {/*      onClick={async () => {}}*/}
-        {/*    >*/}
-        {/*      Create department*/}
-        {/*    </MenuItem>*/}
-        {/*  </MenuList>*/}
-        {/*</Menu>*/}
+          <MenuList>
+            <MenuItem icon={<UserPlus />} onClick={async () => {}}>
+              Add Employee
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
 
       <Flex
