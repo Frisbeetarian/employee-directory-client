@@ -46,6 +46,7 @@ import {
   setPaginationData,
 } from '@/store/ui'
 import Footer from '@/components/Footer'
+import AppModal from '@/components/ui/AppModal'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -53,7 +54,6 @@ export default function Home() {
   const selectedEmployee = useSelector(getSelectedEmployee)
   const [deleteEmployee, { isLoading: isDeleting, isSuccess }] =
     useDeleteEmployeeMutation()
-  const isEmployeeModalOpen = useSelector(getIsAddEmployeeModalOpen)
   const toast = useToast()
 
   const handleDelete = async () => {
@@ -97,105 +97,7 @@ export default function Home() {
 
         <Footer />
 
-        <Modal
-          isOpen={isEmployeeModalOpen}
-          onClose={() => dispatch(setIsAddEmployeeModalOpen(false))}
-          size="xl"
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Add New Employee</ModalHeader>
-            <ModalCloseButton />
-            <Formik
-              initialValues={{
-                name: '',
-                email: '',
-                jobTitle: '',
-                department: '',
-              }}
-              onSubmit={(values, actions) => {
-                console.log(values)
-                actions.setSubmitting(false)
-              }}
-            >
-              {(props) => (
-                <Form>
-                  <ModalBody>
-                    <Flex className="flex-col gap-y-4">
-                      <FormControl>
-                        <FormLabel htmlFor="name">Name</FormLabel>
-                        <Field as={Input} id="name" name="name" type="text" />
-                      </FormControl>
-
-                      <FormControl>
-                        <FormLabel htmlFor="email">Email</FormLabel>
-                        <Field as={Input} id="email" name="email" type="text" />
-                      </FormControl>
-
-                      <FormControl>
-                        <FormLabel htmlFor="phoneNumber">
-                          Phone Number
-                        </FormLabel>
-                        <Field
-                          as={Input}
-                          id="phoneNumber"
-                          name="phoneNumber"
-                          type="text"
-                        />
-                      </FormControl>
-
-                      <FormControl>
-                        <FormLabel htmlFor="jobTitle">Job Title</FormLabel>
-                        <Field
-                          as={Input}
-                          id="jobTitle"
-                          name="jobTitle"
-                          type="text"
-                        />
-                      </FormControl>
-
-                      <FormControl>
-                        <FormLabel htmlFor="hireDate">Hire Date</FormLabel>
-                        <Field
-                          as={Input}
-                          id="hireDate"
-                          name="hireDate"
-                          type="text"
-                        />
-                      </FormControl>
-
-                      <FormControl>
-                        <FormLabel htmlFor="biography">Biography</FormLabel>
-                        <Field
-                          as={Input}
-                          id="biography"
-                          name="biography"
-                          type="text"
-                        />
-                      </FormControl>
-                    </Flex>
-                  </ModalBody>
-                  <ModalFooter>
-                    {/*<Button*/}
-                    {/*  variant="ghost"*/}
-                    {/*  mr={3}*/}
-                    {/*  onClose={() => dispatch(setIsAddEmployeeModalOpen(false))}*/}
-                    {/*>*/}
-                    {/*  Close*/}
-                    {/*</Button>*/}
-                    <Button
-                      colorScheme="blue"
-                      type="submit"
-                      isLoading={props.isSubmitting}
-                    >
-                      Add employee
-                    </Button>
-                  </ModalFooter>
-                </Form>
-              )}
-            </Formik>
-          </ModalContent>
-        </Modal>
+        <AppModal />
 
         {selectedEmployee ? (
           <Drawer
