@@ -18,7 +18,6 @@ import {
 } from '@/store/api/departmentsAPISlice'
 import { useDispatch } from 'react-redux'
 import { setDepartments, setSelectedDepartment } from '@/store/departments'
-import Employee from '@/components/Employee'
 import {
   useGetEmployeesByLocationUuidQuery,
   useGetLocationsQuery,
