@@ -15,14 +15,31 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Checkbox,
+  CheckboxGroup,
+  Stack,
+  Text,
+  Tag,
+  HStack,
+  TagLeftIcon,
+  TagLabel,
+  VStack,
 } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { getSkills } from '@/store/skills'
+import { AddIcon } from '@chakra-ui/icons'
 
 export default function AppModal() {
   const dispatch = useDispatch()
   const isEmployeeModalOpen = useSelector(getIsAddEmployeeModalOpen)
+  const skills = useSelector(getSkills)
 
   return (
     <Modal
@@ -40,13 +57,14 @@ export default function AppModal() {
             email: '',
             jobTitle: '',
             department: '',
+            selectedSkills: [],
           }}
           onSubmit={(values, actions) => {
             console.log(values)
             actions.setSubmitting(false)
           }}
         >
-          {(props) => (
+          {({ values, setFieldValue, isSubmitting }) => (
             <Form>
               <ModalBody className="flex gap-4">
                 <Flex className="w-1/2 flex-col gap-y-4">
@@ -101,14 +119,31 @@ export default function AppModal() {
                   </FormControl>
                 </Flex>
 
-                <Flex>Skills</Flex>
+                <Flex className="w-1/2 flex-col">
+                  <Text>Skills</Text>
+
+                  <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
+                    {skills.map((skill) => (
+                      <Tag
+                        className="cursor-pointer"
+                        size="sm"
+                        key={skill.uuid}
+                        variant="subtle"
+                        _hover={{ background: 'gray', color: 'white' }}
+                      >
+                        <TagLeftIcon boxSize="12px" as={AddIcon} />
+                        <TagLabel>{skill.name}</TagLabel>
+                      </Tag>
+                    ))}
+                  </Flex>
+                </Flex>
               </ModalBody>
 
               <ModalFooter>
                 <Button
                   colorScheme="blue"
                   type="submit"
-                  isLoading={props.isSubmitting}
+                  isLoading={isSubmitting}
                 >
                   Add employee
                 </Button>
