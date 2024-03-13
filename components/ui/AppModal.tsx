@@ -41,6 +41,18 @@ export default function AppModal() {
   const isEmployeeModalOpen = useSelector(getIsAddEmployeeModalOpen)
   const skills = useSelector(getSkills)
 
+  const handleSkillSelected = (skillUuid, selectedSkills, setFieldValue) => {
+    let newSelectedSkills = [...selectedSkills]
+
+    if (newSelectedSkills.includes(skillUuid)) {
+      newSelectedSkills = newSelectedSkills.filter((id) => id !== skillUuid)
+    } else if (newSelectedSkills.length < 5) {
+      newSelectedSkills.push(skillUuid)
+    }
+
+    setFieldValue('selectedSkills', newSelectedSkills)
+  }
+
   return (
     <Modal
       isOpen={isEmployeeModalOpen}
@@ -120,21 +132,74 @@ export default function AppModal() {
                 </Flex>
 
                 <Flex className="w-1/2 flex-col">
-                  <Text>Skills</Text>
+                  <Flex className="flex-col">
+                    <Text className="font-bold">Skills</Text>
 
-                  <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
-                    {skills.map((skill) => (
-                      <Tag
-                        className="cursor-pointer"
-                        size="sm"
-                        key={skill.uuid}
-                        variant="subtle"
-                        _hover={{ background: 'gray', color: 'white' }}
-                      >
-                        <TagLeftIcon boxSize="12px" as={AddIcon} />
-                        <TagLabel>{skill.name}</TagLabel>
-                      </Tag>
-                    ))}
+                    <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
+                      {skills.map((skill) => (
+                        <Tag
+                          className="cursor-pointer"
+                          size="sm"
+                          key={skill.uuid}
+                          variant={
+                            values.selectedSkills.includes(skill.uuid)
+                              ? 'solid'
+                              : 'subtle'
+                          }
+                          colorScheme={
+                            values.selectedSkills.includes(skill.uuid)
+                              ? 'green'
+                              : 'gray'
+                          }
+                          onClick={() =>
+                            handleSkillSelected(
+                              skill.uuid,
+                              values.selectedSkills,
+                              setFieldValue
+                            )
+                          }
+                          _hover={{ background: 'gray.400' }}
+                        >
+                          <TagLeftIcon boxSize="12px" as={AddIcon} />
+                          <TagLabel>{skill.name}</TagLabel>
+                        </Tag>
+                      ))}
+                    </Flex>
+                  </Flex>
+
+                  <Flex className="flex-col">
+                    <Text className="font-bold">Departments</Text>
+
+                    <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
+                      {skills.map((skill) => (
+                        <Tag
+                          className="cursor-pointer"
+                          size="sm"
+                          key={skill.uuid}
+                          variant={
+                            values.selectedSkills.includes(skill.uuid)
+                              ? 'solid'
+                              : 'subtle'
+                          }
+                          colorScheme={
+                            values.selectedSkills.includes(skill.uuid)
+                              ? 'green'
+                              : 'gray'
+                          }
+                          onClick={() =>
+                            handleSkillSelected(
+                              skill.uuid,
+                              values.selectedSkills,
+                              setFieldValue
+                            )
+                          }
+                          _hover={{ background: 'gray.400' }}
+                        >
+                          <TagLeftIcon boxSize="12px" as={AddIcon} />
+                          <TagLabel>{skill.name}</TagLabel>
+                        </Tag>
+                      ))}
+                    </Flex>
                   </Flex>
                 </Flex>
               </ModalBody>
