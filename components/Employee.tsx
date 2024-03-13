@@ -3,7 +3,10 @@ import { Avatar, Flex, Text, Box } from '@chakra-ui/react'
 
 export default function Employee({ employee }) {
   return (
-    <Flex className="my-4 w-full items-center px-4  ">
+    <Flex
+      className="my-2 w-full cursor-pointer items-center px-4 py-2 hover:bg-gray-300 "
+      onClick={() => alert('Fewfe')}
+    >
       <Flex className="items-center " width="20%">
         <Avatar size="md" bg="red.500" className="mr-2" />
         <Text className="text-lg ">{employee.name}</Text>
