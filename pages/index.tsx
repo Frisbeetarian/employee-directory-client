@@ -17,7 +17,10 @@ import Sidebar from '@/components/Sidebar'
 import NavigationBar from '@/components/NavigationBar'
 import ContentArea from '@/components/ContentArea'
 import { useDispatch, useSelector } from 'react-redux'
-import { useGetEmployeesQuery } from '@/store/api/employeesAPISlice'
+import {
+  useDeleteEmployeeMutation,
+  useGetEmployeesQuery,
+} from '@/store/api/employeesAPISlice'
 import { getSelectedEmployee, setEmployees } from '@/store/employees'
 import {
   getIsDrawerOpen,
@@ -31,6 +34,19 @@ export default function Home() {
   const dispatch = useDispatch()
   const isDrawerOpen = useSelector(getIsDrawerOpen)
   const selectedEmployee = useSelector(getSelectedEmployee)
+  const [deleteEmployee, { isLoading: isDeleting, isSuccess }] =
+    useDeleteEmployeeMutation()
+
+  const handleDelete = async () => {
+    if (selectedEmployee?.uuid) {
+      try {
+        await deleteEmployee(selectedEmployee.uuid).unwrap()
+        dispatch(setIsDrawerOpen(false))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
   return (
     <Flex className="min-h-screen overflow-x-hidden">
@@ -122,9 +138,8 @@ export default function Home() {
                     variant="outline"
                     colorScheme="red"
                     mr={3}
-                    onClick={() => {
-                      dispatch(setIsDrawerOpen(false))
-                    }}
+                    onClick={handleDelete}
+                    isLoading={isDeleting}
                   >
                     Delete employee record
                   </Button>
