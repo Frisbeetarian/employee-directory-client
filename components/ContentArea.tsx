@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Text } from '@chakra-ui/react'
+import { Flex, Spinner, Text } from '@chakra-ui/react'
 import Employee from '@/components/Employee'
 import { useSelector } from 'react-redux'
 import { getEmployees } from '@/store/employees'
@@ -16,7 +16,7 @@ export default function ContentArea() {
       className="h-full w-full flex-col overflow-y-auto  pb-5 "
       style={{ width: '85vw', maxHeight: '85vh' }}
     >
-      <Flex className="sticky z-10 w-full items-center border-b bg-white px-4 py-4">
+      <Flex className="sticky z-0 z-10 w-full items-center border-b bg-white px-4 py-4">
         <Text width="20%" align="left" className="">
           Name
         </Text>
@@ -39,7 +39,9 @@ export default function ContentArea() {
       </Flex>
 
       {isEmployeeDataLoading || isSearchLoading ? (
-        <div>Loading...</div>
+        <Flex className="h-full w-full items-center justify-center">
+          <Spinner />
+        </Flex>
       ) : (
         employees?.map((employee) => (
           <Employee key={employee.uuid} employee={employee} />

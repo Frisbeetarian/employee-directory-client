@@ -6,7 +6,7 @@ export const employeesAPISlice = createApi({
     baseUrl: `http://localhost:4020/api`,
     credentials: 'include',
   }),
-  tagTypes: ['Employee'],
+  tagTypes: ['Employee', 'Department'],
   endpoints: (builder) => ({
     getEmployees: builder.query({
       query: ({ page = 1, limit = 12, department }) => ({
@@ -15,17 +15,25 @@ export const employeesAPISlice = createApi({
       }),
       providesTags: ['Employee'],
     }),
-    registerUser: builder.mutation({
-      query: (userData) => ({
-        url: '/users/register',
-        method: 'POST',
-        body: userData,
+    deleteEmployee: builder.mutation({
+      query: (uuid) => ({
+        url: `/employees/${uuid}`,
+        method: 'DELETE',
       }),
-
+    }),
+    addEmployee: builder.mutation({
+      query: (employeeData) => ({
+        url: '/employees',
+        method: 'POST',
+        body: employeeData,
+      }),
       invalidatesTags: ['Employee'],
     }),
   }),
 })
 
-export const { useGetEmployeesQuery, useRegisterUserMutation } =
-  employeesAPISlice
+export const {
+  useGetEmployeesQuery,
+  useDeleteEmployeeMutation,
+  useAddEmployeeMutation,
+} = employeesAPISlice

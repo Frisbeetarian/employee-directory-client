@@ -10,6 +10,7 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react'
+import { AlignJustify, EditIcon, UserPlus } from 'lucide-react'
 
 import { useGetDepartmentsQuery } from '@/store/api/departmentsAPISlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,6 +24,7 @@ import { setSelectedSkill, setSkills } from '@/store/skills'
 import {
   getPaginationData,
   setActiveIndex,
+  setIsAddEmployeeModalOpen,
   setPaginationData,
   setShouldFetchDepartmentEmployees,
   setShouldFetchEmployees,
@@ -160,49 +162,30 @@ function Sidebar() {
       style={{ width: '15vw', minWidth: '15vw', height: '100vh' }}
     >
       <Flex
-        className=" border-b p-4"
+        className="items-center justify-between border-b p-4"
         style={{ height: '7.5vh', minHeight: '7.5vh' }}
       >
         <p className="text-lg leading-tight">Employee Directory</p>
 
-        {/*<Menu>*/}
-        {/*  <MenuButton*/}
-        {/*    as={IconButton}*/}
-        {/*    aria-label="Options"*/}
-        {/*    icon={<HamburgerIcon />}*/}
-        {/*    variant="outline"*/}
-        {/*    color="black"*/}
-        {/*    className="mr-3 "*/}
-        {/*    border="none"*/}
-        {/*    borderRadius="0"*/}
-        {/*    style={{*/}
-        {/*      zIndex: 10,*/}
-        {/*    }}*/}
-        {/*  />*/}
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label="Options"
+            icon={<AlignJustify />}
+            variant="outline"
+          />
 
-        {/*  <MenuList*/}
-        {/*    bg="black"*/}
-        {/*    className="z-10 "*/}
-        {/*    border="none"*/}
-        {/*    borderRadius="0"*/}
-        {/*    style={{*/}
-        {/*      zIndex: 10,*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    <MenuItem*/}
-        {/*      bg="black"*/}
-        {/*      className="z-10 "*/}
-        {/*      border="none"*/}
-        {/*      icon={<EditIcon />}*/}
-        {/*      style={{*/}
-        {/*        zIndex: 100,*/}
-        {/*      }}*/}
-        {/*      onClick={async () => {}}*/}
-        {/*    >*/}
-        {/*      Create department*/}
-        {/*    </MenuItem>*/}
-        {/*  </MenuList>*/}
-        {/*</Menu>*/}
+          <MenuList>
+            <MenuItem
+              icon={<UserPlus />}
+              onClick={async () => {
+                dispatch(setIsAddEmployeeModalOpen(true))
+              }}
+            >
+              Add Employee
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
 
       <Flex
@@ -311,38 +294,13 @@ function Sidebar() {
       </Flex>
 
       <Flex
-        className="box-content flex items-center justify-between border-t px-4 py-10 md:px-0 md:py-0"
+        className="box-content flex items-center justify-between border-t px-4 py-0"
         style={{ height: '7.5vh' }}
       >
-        <Flex className="items-center px-2">
+        <Flex className="items-center ">
           <Avatar size="md" />
-          <p className="ml-2 bg-gray-200 text-lg">fwefew</p>
+          <p className="ml-2  text-lg">Admin</p>
         </Flex>
-
-        {/*<Flex className="justify-between px-3">*/}
-        {/*  <Menu>*/}
-        {/*    <MenuButton>*/}
-        {/*      <SettingsIcon />*/}
-        {/*    </MenuButton>*/}
-
-        {/*    <MenuList bg="black" className="" border="none" borderRadius="0">*/}
-        {/*      <MenuItem*/}
-        {/*        bg="bg-black"*/}
-        {/*        className="bg-black"*/}
-        {/*        border="none"*/}
-        {/*        onClick={async () => {*/}
-        {/*          try {*/}
-        {/*            router.replace('/')*/}
-        {/*          } catch (error) {*/}
-        {/*            console.error('Error logging out:', error)*/}
-        {/*          }*/}
-        {/*        }}*/}
-        {/*      >*/}
-        {/*        Logout*/}
-        {/*      </MenuItem>*/}
-        {/*    </MenuList>*/}
-        {/*  </Menu>*/}
-        {/*</Flex>*/}
       </Flex>
     </div>
   )
