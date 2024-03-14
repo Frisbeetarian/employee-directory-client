@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { setIsDrawerOpen } from '@/store/ui'
 import { setSelectedEmployee } from '@/store/employees'
 
+// @ts-ignore
 export default function Employee({ employee }) {
   const dispatch = useDispatch()
 
@@ -25,7 +26,7 @@ export default function Employee({ employee }) {
       </Text>
 
       <Flex className="flex-col " width="20%">
-        {employee?.departments?.map((department) => (
+        {employee?.departments?.map((department: any) => (
           <Box key={department.uuid} className="inline " display="inline">
             <Text>{department.name}</Text>
           </Box>
@@ -33,13 +34,13 @@ export default function Employee({ employee }) {
       </Flex>
 
       <Flex className="flex-col " width="20%">
-        {employee?.skills?.map((skill) => (
+        {employee?.skills?.map((skill: any) => (
           <Text key={skill.uuid}>{skill.name}</Text>
         ))}
       </Flex>
 
       <Flex className="flex-col " width="20%">
-        {employee?.locations?.map((location) => (
+        {employee?.locations?.map((location: any) => (
           <Text className="" key={location.uuid}>
             {location.name}
           </Text>

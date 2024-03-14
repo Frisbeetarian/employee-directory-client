@@ -121,28 +121,28 @@ export default function Home() {
                 <Flex className="mt-5 w-full justify-between">
                   <Flex className="flex-col">
                     <Text className="font-bold">Departments</Text>
-                    {selectedEmployee?.departments?.map((department) => (
+                    {selectedEmployee?.departments?.map((department: any) => (
                       <Text key={department.uuid}>{department.name}</Text>
                     ))}
                   </Flex>
 
                   <Flex className="flex-col">
                     <Text className="font-bold">Locations</Text>
-                    {selectedEmployee?.locations?.map((location) => (
+                    {selectedEmployee?.locations?.map((location: any) => (
                       <Text key={location.uuid}>{location.name}</Text>
                     ))}
                   </Flex>
 
                   <Flex className="flex-col">
                     <Text className="font-bold">Projects</Text>
-                    {selectedEmployee?.projects?.map((project) => (
+                    {selectedEmployee?.projects?.map((project: any) => (
                       <Text key={project.uuid}>{project.name}</Text>
                     ))}
                   </Flex>
 
                   <Flex className="flex-col">
                     <Text className="font-bold">Skills</Text>
-                    {selectedEmployee?.skills?.map((skill) => (
+                    {selectedEmployee?.skills?.map((skill: any) => (
                       <Text key={skill.uuid}>{skill.name}</Text>
                     ))}
                   </Flex>

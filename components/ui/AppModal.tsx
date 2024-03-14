@@ -55,9 +55,9 @@ export default function AppModal() {
   const toast = useToast()
 
   const handleDepartmentSelected = (
-    departmentUuid,
-    selectedDepartments,
-    setFieldValue
+    departmentUuid: string,
+    selectedDepartments: string[],
+    setFieldValue: any
   ) => {
     let newSelectedDepartments = [...selectedDepartments]
 
@@ -82,9 +82,9 @@ export default function AppModal() {
   }
 
   const handleProjectSelected = (
-    projectUuid,
-    selectedProjects,
-    setFieldValue
+    projectUuid: string,
+    selectedProjects: string[],
+    setFieldValue: any
   ) => {
     let newSelectedProjects = [...selectedProjects]
 
@@ -108,7 +108,11 @@ export default function AppModal() {
     setFieldValue('selectedProjects', newSelectedProjects)
   }
 
-  const handleSkillSelected = (skillUuid, selectedSkills, setFieldValue) => {
+  const handleSkillSelected = (
+    skillUuid: string,
+    selectedSkills: string[],
+    setFieldValue: any
+  ) => {
     let newSelectedSkills = [...selectedSkills]
 
     if (newSelectedSkills.includes(skillUuid)) {
@@ -130,9 +134,9 @@ export default function AppModal() {
   }
 
   const handleLocationSelected = (
-    locationUuid,
-    selectedLocations,
-    setFieldValue
+    locationUuid: string,
+    selectedLocations: string[],
+    setFieldValue: any
   ) => {
     let newSelectedLocations = [...selectedLocations]
 
@@ -156,6 +160,7 @@ export default function AppModal() {
     setFieldValue('selectedLocations', newSelectedLocations)
   }
 
+  // @ts-ignore
   async function handleFormSubmit(values, actions) {
     try {
       const valuesToSend = {
@@ -319,17 +324,19 @@ export default function AppModal() {
                     <Text className="font-bold">Departments</Text>
 
                     <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
-                      {departments.map((department) => (
+                      {departments.map((department: any) => (
                         <Tag
                           className="cursor-pointer"
                           size="sm"
                           key={department.uuid}
                           variant={
+                            // @ts-ignore
                             values.selectedDepartments.includes(department.uuid)
                               ? 'solid'
                               : 'subtle'
                           }
                           colorScheme={
+                            // @ts-ignore
                             values.selectedDepartments.includes(department.uuid)
                               ? 'green'
                               : 'gray'
@@ -353,17 +360,19 @@ export default function AppModal() {
                       <Text className="font-bold">Projects</Text>
 
                       <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
-                        {projects.map((project) => (
+                        {projects.map((project: any) => (
                           <Tag
                             className="cursor-pointer"
                             size="sm"
                             key={project.uuid}
                             variant={
+                              // @ts-ignore
                               values.selectedProjects.includes(project.uuid)
                                 ? 'solid'
                                 : 'subtle'
                             }
                             colorScheme={
+                              // @ts-ignore
                               values.selectedProjects.includes(project.uuid)
                                 ? 'green'
                                 : 'gray'
@@ -388,17 +397,19 @@ export default function AppModal() {
                       <Text className="font-bold">Skills</Text>
 
                       <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
-                        {skills.map((skill) => (
+                        {skills.map((skill: any) => (
                           <Tag
                             className="cursor-pointer"
                             size="sm"
                             key={skill.uuid}
                             variant={
+                              // @ts-ignore
                               values.selectedSkills.includes(skill.uuid)
                                 ? 'solid'
                                 : 'subtle'
                             }
                             colorScheme={
+                              // @ts-ignore
                               values.selectedSkills.includes(skill.uuid)
                                 ? 'green'
                                 : 'gray'
@@ -423,17 +434,19 @@ export default function AppModal() {
                       <Text className="font-bold">Locations</Text>
 
                       <Flex className="max-h-40 flex-wrap gap-2 overflow-y-scroll rounded-sm bg-gray-300 p-2">
-                        {locations.map((location) => (
+                        {locations.map((location: any) => (
                           <Tag
                             className="cursor-pointer"
                             size="sm"
                             key={location.uuid}
                             variant={
+                              // @ts-ignore
                               values.selectedLocations.includes(location.uuid)
                                 ? 'solid'
                                 : 'subtle'
                             }
                             colorScheme={
+                              // @ts-ignore
                               values.selectedLocations.includes(location.uuid)
                                 ? 'green'
                                 : 'gray'

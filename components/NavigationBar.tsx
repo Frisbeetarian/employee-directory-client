@@ -24,17 +24,16 @@ export default function NavigationBar() {
   const [employeeLoad, setEmployeeLoad] = useState(true)
   const searchQuery = useSelector(getSearchQuery)
   const paginationData = useSelector(getPaginationData)
-  const { page, limit } = paginationData
+  const { limit } = paginationData
 
-  const { data: employeeData, isLoading: employeeLoading } =
-    useGetEmployeesQuery(
-      { page: 1, limit: 12 },
-      {
-        skip: employeeLoad,
-      }
-    )
+  const { data: employeeData } = useGetEmployeesQuery(
+    { page: 1, limit: 12 },
+    {
+      skip: employeeLoad,
+    }
+  )
 
-  const { data, isLoading, error } = useSearchEmployeesQuery(
+  const { data } = useSearchEmployeesQuery(
     {
       page: 1,
       limit: 12,
