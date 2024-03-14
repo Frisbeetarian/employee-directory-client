@@ -43,7 +43,7 @@ export default function ContentArea() {
           <Spinner />
         </Flex>
       ) : (
-        employees?.map((employee) => (
+        employees?.map((employee: any) => (
           <Employee key={employee.uuid} employee={employee} />
         ))
       )}

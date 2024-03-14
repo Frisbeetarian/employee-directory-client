@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
 import { useDispatch, useSelector } from 'react-redux'
 import { Flex } from '@chakra-ui/react'
@@ -187,7 +187,7 @@ export default function Footer() {
     }
   }, [data, isLoading])
 
-  const handlePageClick = (event) => {
+  const handlePageClick = (event: any) => {
     const newPage = event.selected + 1
     if (activeIndex === 'employees') {
       dispatch(setShouldFetchEmployees(true))

@@ -19,12 +19,13 @@ const slice = createSlice({
       employees.selectedEmployee = action.payload
     },
     addEmployeeToStore: (employees, action) => {
+      // @ts-ignore
       employees.list.push(action.payload)
     },
-    removeEmployee: (employees, action) => {
+    removeEmployee: (employees: any, action) => {
       const uuid = action.payload
       employees.list = employees.list.filter(
-        (employee) => employee.uuid !== uuid
+        (employee: any) => employee.uuid !== uuid
       )
 
       if (

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import {
   Avatar,
   Flex,
-  Heading,
   IconButton,
   Menu,
   MenuButton,
@@ -10,7 +9,7 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react'
-import { AlignJustify, EditIcon, UserPlus } from 'lucide-react'
+import { AlignJustify, UserPlus } from 'lucide-react'
 
 import { useGetDepartmentsQuery } from '@/store/api/departmentsAPISlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -38,15 +37,16 @@ function Sidebar() {
   const paginationData = useSelector(getPaginationData)
 
   const { data: departmentsData, isLoading: isDepartmentsLoading } =
-    useGetDepartmentsQuery()
+    useGetDepartmentsQuery(undefined)
 
   const { data: locationsData, isLoading: isLocationsLoading } =
-    useGetLocationsQuery()
+    useGetLocationsQuery(undefined)
 
   const { data: projectsData, isLoading: isProjectsLoading } =
-    useGetProjectsQuery()
+    useGetProjectsQuery(undefined)
 
-  const { data: skillsData, isLoading: isSkillsLoading } = useGetSkillsQuery()
+  const { data: skillsData, isLoading: isSkillsLoading } =
+    useGetSkillsQuery(undefined)
   const [selectedFilter, setSelectedFilter] = useState({ type: '', uuid: '' })
 
   useEffect(() => {
@@ -65,7 +65,7 @@ function Sidebar() {
     dispatch(setLocations(locationsData))
   }, [locationsData])
 
-  function handleDepartmentSelected(departmentUuid) {
+  function handleDepartmentSelected(departmentUuid: string) {
     setSelectedFilter({ type: 'departments', uuid: departmentUuid })
 
     dispatch(setActiveIndex('departments'))
@@ -87,7 +87,7 @@ function Sidebar() {
     )
   }
 
-  function handleLocationSelected(locationUuid) {
+  function handleLocationSelected(locationUuid: string) {
     setSelectedFilter({ type: 'locations', uuid: locationUuid })
 
     dispatch(setActiveIndex('locations'))
@@ -109,7 +109,7 @@ function Sidebar() {
     )
   }
 
-  function handleProjectSelected(projectUuid) {
+  function handleProjectSelected(projectUuid: string) {
     setSelectedFilter({ type: 'projects', uuid: projectUuid })
 
     dispatch(setActiveIndex('projects'))
@@ -131,7 +131,7 @@ function Sidebar() {
     )
   }
 
-  function handleSkillSelected(skillUuid) {
+  function handleSkillSelected(skillUuid: string) {
     setSelectedFilter({ type: 'skills', uuid: skillUuid })
 
     dispatch(setActiveIndex('skills'))
@@ -153,7 +153,7 @@ function Sidebar() {
     )
   }
 
-  const isFilterSelected = (type, uuid) =>
+  const isFilterSelected = (type: string, uuid: string) =>
     selectedFilter.type === type && selectedFilter.uuid === uuid
 
   return (
@@ -199,7 +199,7 @@ function Sidebar() {
             {isDepartmentsLoading ? (
               <div>Loading departments...</div>
             ) : (
-              departmentsData?.map((department) => (
+              departmentsData?.map((department: any) => (
                 <Text
                   key={department.uuid}
                   onClick={() => handleDepartmentSelected(department.uuid)}
@@ -223,7 +223,7 @@ function Sidebar() {
             {isLocationsLoading ? (
               <div>Loading locations...</div>
             ) : (
-              locationsData?.map((location) => (
+              locationsData?.map((location: any) => (
                 <Text
                   key={location.uuid}
                   onClick={() => handleLocationSelected(location.uuid)}
@@ -247,7 +247,7 @@ function Sidebar() {
             {isProjectsLoading ? (
               <div>Loading projects...</div>
             ) : (
-              projectsData?.map((project) => (
+              projectsData?.map((project: any) => (
                 // <Text key={project.uuid}>{project.name}</Text>
 
                 <Text
@@ -273,7 +273,7 @@ function Sidebar() {
             {isSkillsLoading ? (
               <div>Loading skills...</div>
             ) : (
-              skillsData?.map((skill) => (
+              skillsData?.map((skill: any) => (
                 <Text
                   key={skill.uuid}
                   onClick={() => handleSkillSelected(skill.uuid)}
