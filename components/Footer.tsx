@@ -94,10 +94,14 @@ export default function Footer() {
     )
 
   useEffect(() => {
+    dispatch(setEmployees([]))
+    dispatch(setIsEmployeeDataLoading(true))
+
     if (
       employeesByLocation?.employees &&
       employeesByLocation?.employees?.length !== 0
     ) {
+      dispatch(setIsEmployeeDataLoading(false))
       dispatch(setEmployees(employeesByLocation.employees))
       dispatch(setShouldFetchLocationEmployees(false))
 
@@ -113,10 +117,14 @@ export default function Footer() {
   }, [employeesByLocation, isEmployeesByLocationLoading])
 
   useEffect(() => {
+    dispatch(setEmployees([]))
+    dispatch(setIsEmployeeDataLoading(true))
+
     if (
       employeesByDepartment?.employees &&
       employeesByDepartment?.employees?.length !== 0
     ) {
+      dispatch(setIsEmployeeDataLoading(false))
       dispatch(setEmployees(employeesByDepartment.employees))
       dispatch(setShouldFetchDepartmentEmployees(false))
 
@@ -132,10 +140,14 @@ export default function Footer() {
   }, [employeesByDepartment, isEmployeesByDepartmentLoading])
 
   useEffect(() => {
+    dispatch(setEmployees([]))
+    dispatch(setIsEmployeeDataLoading(true))
+
     if (
       employeesByProject?.employees &&
       employeesByProject?.employees?.length !== 0
     ) {
+      dispatch(setIsEmployeeDataLoading(false))
       dispatch(setEmployees(employeesByProject.employees))
       dispatch(setShouldFetchProjectEmployees(false))
 
@@ -151,10 +163,14 @@ export default function Footer() {
   }, [employeesByProject, isEmployeesByProjectLoading])
 
   useEffect(() => {
+    dispatch(setEmployees([]))
+    dispatch(setIsEmployeeDataLoading(true))
+
     if (
       employeesBySkill?.employees &&
       employeesBySkill?.employees?.length !== 0
     ) {
+      dispatch(setIsEmployeeDataLoading(false))
       dispatch(setEmployees(employeesBySkill.employees))
       dispatch(setShouldFetchSkillEmployees(false))
 
@@ -170,9 +186,11 @@ export default function Footer() {
   }, [employeesBySkill, isEmployeesBySkillLoading])
 
   useEffect(() => {
+    dispatch(setEmployees([]))
     dispatch(setIsEmployeeDataLoading(true))
 
     if (data?.employees && data?.employees?.length !== 0) {
+      dispatch(setIsEmployeeDataLoading(false))
       dispatch(setEmployees(data.employees))
       dispatch(setIsEmployeeDataLoading(false))
 
